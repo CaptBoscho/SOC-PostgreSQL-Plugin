@@ -7,7 +7,7 @@ import factory.IDAOFactory;
 /**
  * Created by Kyle 'TMD' Cornelison on 4/2/2016.
  *
- * Persistence Plugin based on Redis
+ * Persistence Plugin based on PostgreSQL
  */
 public class Plugin implements IPersistencePlugin {
     private IDAOFactory factory = DAOFactory.getInstance();
