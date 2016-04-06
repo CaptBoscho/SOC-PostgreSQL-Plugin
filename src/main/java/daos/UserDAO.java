@@ -32,15 +32,6 @@ public class UserDAO implements IUserDAO {
         return null;
     }
 
-    /**
-     * mostly be used for updating the game blob state
-     *
-     * @param dto
-     */
-    @Override
-    public void updateData(IDTO dto) {
-
-    }
 
     /**
      * Mostly be used for deleting commands every n
