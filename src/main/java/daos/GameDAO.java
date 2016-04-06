@@ -1,6 +1,6 @@
-package daos;
+package main.java.daos;
 
-import dto.IDTO;
+import main.java.dto.IDTO;
 
 /**
  * Created by Kyle 'TMD' Cornelison on 4/2/2016.
