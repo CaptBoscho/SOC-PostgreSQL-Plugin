@@ -1,4 +1,4 @@
-package daos;
+package database;
 
 /**
  * Created by boscho on 4/4/16.

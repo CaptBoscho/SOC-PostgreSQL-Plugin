@@ -1,6 +1,6 @@
-package externalpersistencetemp.sql.factory;
+package factory;
 
-import externalpersistencetemp.sql.daos.*;
+import daos.*;
 
 /**
  * Created by Kyle 'TMD' Cornelison on 4/2/2016.

@@ -1,8 +1,7 @@
-package externalpersistencetemp.sql.plugin;
+package plugin;
 
-import externalpersistencetemp.sql.daos.ICommandDAO;
-import externalpersistencetemp.sql.daos.IGameDAO;
-import externalpersistencetemp.sql.daos.IUserDAO;
+
+import daos.*;
 
 /**
  * Created by Kyle 'TMD' Cornelison on 4/2/2016.
