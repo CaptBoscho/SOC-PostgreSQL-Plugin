@@ -10,7 +10,7 @@ public interface IUserDAO {
      * Handles adding a user
      * @param dto
      */
-    void addObject(IDTO dto);
+    void addUser(IDTO dto);
 
     /**
      * Handles verifying user which returns userID
@@ -18,12 +18,12 @@ public interface IUserDAO {
      * @param dto
      * @return
      */
-    IDTO readData(IDTO dto);
+    IDTO getUsers(IDTO dto);
 
 
     /**
      * delete a user
      * @param dto
      */
-    void deleteData(IDTO dto);
+    void deleteUsers(IDTO dto);
 }
