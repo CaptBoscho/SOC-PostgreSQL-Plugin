@@ -1,9 +1,11 @@
 package daos;
 
+import dto.GameDTO;
 import dto.IDTO;
 import exceptions.GameTableException;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by Kyle 'TMD' Cornelison on 4/5/2016.
@@ -15,32 +17,31 @@ public interface IGameDAO {
      * adding a game
      * @param dto
      */
-    void addGameObject(IDTO dto) throws GameTableException, SQLException;
+    void addGameObject(GameDTO dto) throws GameTableException, SQLException;
 
     /**
      * Handles verifying user which returns userID
      * Getting the current game model
      * getting a list of Commands
-     * @param dto
      * @return
      */
-    IDTO getGameModel(IDTO dto) throws SQLException, GameTableException;
+    GameDTO getGameModel(int gameID) throws SQLException, GameTableException;
+
+    List<GameDTO> getAllGames() throws SQLException;
 
     /**
      * mostly be used for updating the game blob state
      * @param dto
      */
-    void updateGame(IDTO dto) throws GameTableException, SQLException;
+    void updateGame(GameDTO dto) throws GameTableException, SQLException;
 
     /**
      * Deletes all games
-     * @param dto
      */
-    void deleteAllGames(IDTO dto) throws SQLException, GameTableException;
+    void deleteAllGames() throws SQLException, GameTableException;
 
     /**
      * Deletes a game
-     * @param dto
      */
-    void deleteGame(IDTO dto) throws GameTableException, SQLException;
+    void deleteGame(int gameID) throws GameTableException, SQLException;
 }

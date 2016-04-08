@@ -10,6 +10,8 @@ import java.sql.Statement;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Kyle 'TMD' Cornelison on 4/2/2016.
@@ -24,19 +26,14 @@ public class UserDAO implements IUserDAO {
      * @param dto
      */
     @Override
-    public void addUser(IDTO dto) throws UserTableException, SQLException {
-        if(dto instanceof AddUserDTO){
-            Statement stmt = Database.getConnection().createStatement();
-            String sql = "INSERT INTO USERS (ID,NAME,USERNAME,PASSWORD) "
-                    + "VALUES (" + ((AddUserDTO) dto).getID() + ", " + ((AddUserDTO) dto).getName() + ", "
-                    + ((AddUserDTO) dto).getUserName() + ", " + ((AddUserDTO) dto).getPassword() + " );";
-            stmt.executeUpdate(sql);
-            stmt.close();
-            Database.getConnection().commit();
-
-        } else {
-            throw new UserTableException("Wrong DTO");
-        }
+    public void addUser(UserDTO dto) throws UserTableException, SQLException {
+        Statement stmt = Database.getConnection().createStatement();
+        String sql = "INSERT INTO USERS (ID,NAME,USERNAME,PASSWORD) "
+                + "VALUES (" + dto.getId() + ", " + dto.getName() + ", "
+                + dto.getUserName() + ", " + dto.getPassword() + " );";
+        stmt.executeUpdate(sql);
+        stmt.close();
+        Database.getConnection().commit();
     }
 
     /**
@@ -44,28 +41,24 @@ public class UserDAO implements IUserDAO {
      * Getting the current game model
      * getting a list of Commands
      *
-     * @param dto
      * @return
      */
     @Override
-    public IDTO getUsers(IDTO dto) throws SQLException, UserTableException {
-        if(dto instanceof GetAllUsersDTO) {
-            Statement stmt = Database.getConnection().createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM USERS;");
-            while(rs.next()){
-                UserDTO user = new UserDTO();
-                user.setId(rs.getInt("id"));
-                user.setName(rs.getString("name"));
-                user.setUserName(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
-                ((GetAllUsersDTO) dto).addUser(user);
-            }
-            rs.close();
-            stmt.close();
-            return dto;
-        } else {
-            throw new UserTableException("wrong dto");
+    public List<UserDTO> getUsers() throws SQLException, UserTableException {
+        Statement stmt = Database.getConnection().createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM USERS;");
+        List<UserDTO> users = new ArrayList<>();
+        while(rs.next()){
+            UserDTO user = new UserDTO();
+            user.setId(rs.getInt("id"));
+            user.setName(rs.getString("name"));
+            user.setUserName(rs.getString("username"));
+            user.setPassword(rs.getString("password"));
+            users.add(user);
         }
+        rs.close();
+        stmt.close();
+        return users;
     }
 
 
@@ -73,18 +66,13 @@ public class UserDAO implements IUserDAO {
      * Mostly be used for deleting commands every n
      * moves.
      *
-     * @param dto
      */
     @Override
-    public void deleteUsers(IDTO dto) throws SQLException, UserTableException {
-        if(dto instanceof DeleteAllUsersDTO) {
-            Statement stmt = Database.getConnection().createStatement();
-            String sql = "DELETE FROM USERS;";
-            stmt.executeUpdate(sql);
-            Database.getConnection().commit();
-            stmt.close();
-        } else {
-            throw new UserTableException("wrong dto");
-        }
+    public void deleteUsers() throws SQLException, UserTableException {
+        Statement stmt = Database.getConnection().createStatement();
+        String sql = "DELETE FROM USERS;";
+        stmt.executeUpdate(sql);
+        Database.getConnection().commit();
+        stmt.close();
     }
 }

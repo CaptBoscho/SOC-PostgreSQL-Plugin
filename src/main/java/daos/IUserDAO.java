@@ -1,9 +1,11 @@
 package daos;
 
 import dto.IDTO;
+import dto.UserDTO;
 import exceptions.UserTableException;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by Kyle 'TMD' Cornelison on 4/5/2016.
@@ -13,20 +15,18 @@ public interface IUserDAO {
      * Handles adding a user
      * @param dto
      */
-    void addUser(IDTO dto) throws UserTableException, SQLException;
+    void addUser(UserDTO dto) throws UserTableException, SQLException;
 
     /**
      * Handles verifying user which returns userID
      *
-     * @param dto
      * @return
      */
-    IDTO getUsers(IDTO dto) throws SQLException, UserTableException;
+    List<UserDTO> getUsers() throws SQLException, UserTableException;
 
 
     /**
      * delete a user
-     * @param dto
      */
-    void deleteUsers(IDTO dto) throws SQLException, UserTableException;
+    void deleteUsers() throws SQLException, UserTableException;
 }

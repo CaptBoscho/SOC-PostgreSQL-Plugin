@@ -8,6 +8,8 @@ import java.sql.*;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Kyle 'TMD' Cornelison on 4/2/2016.
@@ -21,11 +23,11 @@ public class GameDAO implements IGameDAO {
      * @param dto
      */
     @Override
-    public void addGameObject(IDTO dto) throws GameTableException, SQLException {
-        if(dto instanceof NewGameDTO){
+    public void addGameObject(GameDTO dto) throws GameTableException, SQLException {
+        if(dto instanceof GameDTO){
             Statement stmt = Database.getConnection().createStatement();
             String sql = "INSERT INTO GAMES (ID,STATE) "
-                    + "VALUES (" + ((NewGameDTO) dto).getGameID() + ", " + ((NewGameDTO) dto).getGameState() + " );";
+                    + "VALUES (" + dto.getGameID() + ", " + dto.getState() + " );";
             stmt.executeUpdate(sql);
             stmt.close();
             Database.getConnection().commit();
@@ -39,35 +41,35 @@ public class GameDAO implements IGameDAO {
      * Getting the current game model
      * getting a list of Commands
      * for just the getGameBlobDto, should only go through once
-     * @param dto
      * @return
      */
     @Override
-    public IDTO getGameModel(IDTO dto) throws SQLException, GameTableException {
+    public GameDTO getGameModel(int gameID) throws SQLException, GameTableException {
         Statement stmt = Database.getConnection().createStatement();
-        if(dto instanceof GetGameBlobDTO){
-            ResultSet rs = stmt.executeQuery( "SELECT * FROM GAMES WHERE GAMEID = "
-                    + ((GetGameBlobDTO) dto).getGameID() +";");
-            while( rs.next()){
-                ((GetGameBlobDTO) dto).setGameState(rs.getBlob("state"));
-            }
-            rs.close();
-            stmt.close();
-            return dto;
-        } else if(dto instanceof GetAllGamesDTO){
-            ResultSet rs = stmt.executeQuery("SELECT * FROM GAMES;");
-            while (rs.next()){
-                GameDTO game = new GameDTO();
-                game.setGameID(rs.getInt("id"));
-                game.setState(rs.getBlob("state"));
-                ((GetAllGamesDTO) dto).addGame(game);
-            }
-            rs.close();
-            stmt.close();
-            return dto;
-        } else {
-            throw new GameTableException("wrong dto");
+        ResultSet rs = stmt.executeQuery( "SELECT * FROM GAMES WHERE GAMEID = "
+                + gameID +";");
+        GameDTO dto = new GameDTO();
+        dto.setGameID(gameID);
+        dto.setState(rs.getBlob("state"));
+        rs.close();
+        stmt.close();
+        return dto;
+    }
+
+    @Override
+    public List<GameDTO> getAllGames() throws SQLException {
+        List<GameDTO> games = new ArrayList<>();
+        Statement stmt = Database.getConnection().createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM GAMES;");
+        while (rs.next()){
+            GameDTO game = new GameDTO();
+            game.setGameID(rs.getInt("id"));
+            game.setState(rs.getBlob("state"));
+            games.add(game);
         }
+        rs.close();
+        stmt.close();
+        return games;
     }
 
     /**
@@ -76,48 +78,35 @@ public class GameDAO implements IGameDAO {
      * @param dto
      */
     @Override
-    public void updateGame(IDTO dto) throws GameTableException, SQLException {
-        if(dto instanceof UpdateGameDTO){
-            Statement stmt = Database.getConnection().createStatement();
-            String sql = "UPDATE GAME set STATE = " + ((UpdateGameDTO) dto).getGameState()
-                    + "where GAMEID=" + ((UpdateGameDTO) dto).getGameID() + ";";
-            stmt.executeUpdate(sql);
-            Database.getConnection().commit();
-            stmt.close();
-        } else {
-            throw new GameTableException("wrong dto");
-        }
+    public void updateGame(GameDTO dto) throws SQLException {
+        Statement stmt = Database.getConnection().createStatement();
+        String sql = "UPDATE GAME set STATE = " + dto.getState()
+                + "where GAMEID=" + dto.getGameID() + ";";
+        stmt.executeUpdate(sql);
+        Database.getConnection().commit();
+        stmt.close();
     }
 
     /**
      * Mostly be used for deleting commands every n
      * moves.
      *
-     * @param dto
      */
     @Override
-    public void deleteAllGames(IDTO dto) throws SQLException, GameTableException {
-        if(dto instanceof DeleteAllGamesDTO){
+    public void deleteAllGames() throws SQLException{
             Statement stmt = Database.getConnection().createStatement();
             String sql = "DELETE FROM GAMES;";
             stmt.executeUpdate(sql);
             Database.getConnection().commit();
             stmt.close();
-        } else {
-            throw new GameTableException("wrong dto");
-        }
     }
 
     @Override
-    public void deleteGame(IDTO dto) throws GameTableException, SQLException {
-        if(dto instanceof  DeleteGameDTO){
+    public void deleteGame(int gameID) throws SQLException {
             Statement stmt = Database.getConnection().createStatement();
-            String sql = "DELETE FROM GAMES where " + ((DeleteGameDTO) dto).getGameID() + ";";
+            String sql = "DELETE FROM GAMES where " + gameID + ";";
             stmt.executeUpdate(sql);
             Database.getConnection().commit();
             stmt.close();
-        } else {
-            throw new GameTableException("wrong dto");
-        }
     }
 }
