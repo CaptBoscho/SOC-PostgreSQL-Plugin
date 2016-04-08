@@ -8,6 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  * Created by Kyle 'TMD' Cornelison on 4/2/2016.
  */
@@ -17,13 +20,13 @@ public class CommandDAO implements ICommandDAO {
     @Override
     public void addCommand(IDTO dto) throws CommandTableException, SQLException {
         if(dto instanceof AddCommandDTO){
-            Statement stmt = Database.getInstance().getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String sql = "INSERT INTO COMMANDS (GAMEID,VERSION,COMMAND) "
                     + "VALUES (" + ((AddCommandDTO) dto).getGameID() + ", " + ((AddCommandDTO) dto).getVersion() +
                     ", " + ((AddCommandDTO) dto).getiCommand() + " );";
             stmt.executeUpdate(sql);
             stmt.close();
-            Database.getInstance().getConnection().commit();
+            Database.getConnection().commit();
         } else {
             throw new CommandTableException("wrong DTO");
         }
@@ -31,7 +34,7 @@ public class CommandDAO implements ICommandDAO {
 
     @Override
     public IDTO getCommands(IDTO dto) throws CommandTableException, SQLException {
-        Statement stmt = Database.getInstance().getConnection().createStatement();
+        Statement stmt = Database.getConnection().createStatement();
         if(dto instanceof GetCommandsDTO){
             ResultSet rs = stmt.executeQuery( "SELECT * FROM COMMANDS WHERE GAMEID = "
                     + ((GetCommandsDTO) dto).getGameID() + ";" );
@@ -65,10 +68,10 @@ public class CommandDAO implements ICommandDAO {
     @Override
     public void deleteAllCommands(IDTO dto) throws CommandTableException, SQLException {
         if(dto instanceof DeleteAllCommandsDTO){
-            Statement stmt = Database.getInstance().getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String sql = "DELETE FROM COMMANDS;";
             stmt.executeUpdate(sql);
-            Database.getInstance().getConnection().commit();
+            Database.getConnection().commit();
             stmt.close();
         } else {
             throw new CommandTableException("wrong dto");
@@ -78,10 +81,10 @@ public class CommandDAO implements ICommandDAO {
     @Override
     public void deleteCommandsFromGame(IDTO dto) throws CommandTableException, SQLException {
         if(dto instanceof DeleteCommandsDTO){
-            Statement stmt = Database.getInstance().getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String sql = "DELETE from COMMANDS where GAMEID=" + ((DeleteCommandsDTO) dto).getGameID() + ";";
             stmt.executeUpdate(sql);
-            Database.getInstance().getConnection().commit();
+            Database.getConnection().commit();
             stmt.close();
         } else {
             throw new CommandTableException("wrong dto");

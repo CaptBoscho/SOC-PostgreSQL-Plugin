@@ -8,6 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  * Created by Kyle 'TMD' Cornelison on 4/2/2016.
  */
@@ -23,13 +26,13 @@ public class UserDAO implements IUserDAO {
     @Override
     public void addUser(IDTO dto) throws UserTableException, SQLException {
         if(dto instanceof AddUserDTO){
-            Statement stmt = Database.getInstance().getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String sql = "INSERT INTO USERS (ID,NAME,USERNAME,PASSWORD) "
                     + "VALUES (" + ((AddUserDTO) dto).getID() + ", " + ((AddUserDTO) dto).getName() + ", "
                     + ((AddUserDTO) dto).getUserName() + ", " + ((AddUserDTO) dto).getPassword() + " );";
             stmt.executeUpdate(sql);
             stmt.close();
-            Database.getInstance().getConnection().commit();
+            Database.getConnection().commit();
 
         } else {
             throw new UserTableException("Wrong DTO");
@@ -47,7 +50,7 @@ public class UserDAO implements IUserDAO {
     @Override
     public IDTO getUsers(IDTO dto) throws SQLException, UserTableException {
         if(dto instanceof GetAllUsersDTO) {
-            Statement stmt = Database.getInstance().getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM USERS;");
             while(rs.next()){
                 UserDTO user = new UserDTO();
@@ -62,7 +65,6 @@ public class UserDAO implements IUserDAO {
         } else {
             throw new UserTableException("wrong dto");
         }
-
     }
 
 
@@ -75,14 +77,13 @@ public class UserDAO implements IUserDAO {
     @Override
     public void deleteUsers(IDTO dto) throws SQLException, UserTableException {
         if(dto instanceof DeleteAllUsersDTO) {
-            Statement stmt = Database.getInstance().getConnection().createStatement();
+            Statement stmt = Database.getConnection().createStatement();
             String sql = "DELETE FROM USERS;";
             stmt.executeUpdate(sql);
-            Database.getInstance().getConnection().commit();
+            Database.getConnection().commit();
             stmt.close();
         } else {
             throw new UserTableException("wrong dto");
         }
-
     }
 }

@@ -19,6 +19,10 @@ public class CLI {
                 database.shutdown();
                 System.exit(0);
             }
+
+            if(input.equals("clear")) {
+                database.clear();
+            }
         }
     }
 }
