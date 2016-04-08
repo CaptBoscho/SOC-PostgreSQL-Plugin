@@ -7,49 +7,24 @@ import dto.IDTO;
  */
 public class CommandDAO implements ICommandDAO {
 
-    /**
-     * Handles adding a user,
-     * adding a command
-     * adding a game
-     *
-     * @param dto
-     */
-    @Override
-    public void addObject(IDTO dto) {
 
+    @Override
+    public void addCommand(IDTO dto) {
+        
     }
 
-    /**
-     * Handles verifying user which returns userID
-     * Getting the current game model
-     * getting a list of Commands
-     *
-     * @param dto
-     * @return
-     */
     @Override
-    public IDTO readData(IDTO dto) {
+    public IDTO getCommands(IDTO dto) {
         return null;
     }
 
-    /**
-     * mostly be used for updating the game blob state
-     *
-     * @param dto
-     */
     @Override
-    public void updateData(IDTO dto) {
+    public void deleteAllCommands(IDTO dto) {
 
     }
 
-    /**
-     * Mostly be used for deleting commands every n
-     * moves.
-     *
-     * @param dto
-     */
     @Override
-    public void deleteData(IDTO dto) {
+    public void deleteCommandsFromGame(IDTO dto) {
 
     }
 }

@@ -12,7 +12,7 @@ public interface ICommandDAO {
      * adding a game
      * @param dto
      */
-    void addObject(IDTO dto);
+    void addCommand(IDTO dto);
 
     /**
      * Handles verifying user which returns userID
@@ -21,18 +21,18 @@ public interface ICommandDAO {
      * @param dto
      * @return
      */
-    IDTO readData(IDTO dto);
+    IDTO getCommands(IDTO dto);
 
     /**
      * mostly be used for updating the game blob state
      * @param dto
      */
-    void updateData(IDTO dto);
+    void deleteAllCommands(IDTO dto);
 
     /**
      * Mostly be used for deleting commands every n
      * moves.
      * @param dto
      */
-    void deleteData(IDTO dto);
+    void deleteCommandsFromGame(IDTO dto);
 }

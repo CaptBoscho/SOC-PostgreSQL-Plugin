@@ -7,32 +7,23 @@ import dto.IDTO;
  */
 public interface IUserDAO {
     /**
-     * Handles adding a user,
-     * adding a command
-     * adding a game
+     * Handles adding a user
      * @param dto
      */
-    void addObject(IDTO dto);
+    void addUser(IDTO dto);
 
     /**
      * Handles verifying user which returns userID
-     * Getting the current game model
-     * getting a list of Commands
+     *
      * @param dto
      * @return
      */
-    IDTO readData(IDTO dto);
+    IDTO getUsers(IDTO dto);
+
 
     /**
-     * mostly be used for updating the game blob state
+     * delete a user
      * @param dto
      */
-    void updateData(IDTO dto);
-
-    /**
-     * Mostly be used for deleting commands every n
-     * moves.
-     * @param dto
-     */
-    void deleteData(IDTO dto);
+    void deleteUsers(IDTO dto);
 }

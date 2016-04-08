@@ -14,7 +14,7 @@ public class GameDAO implements IGameDAO {
      * @param dto
      */
     @Override
-    public void addObject(IDTO dto) {
+    public void addGameObject(IDTO dto) {
 
     }
 
@@ -27,7 +27,7 @@ public class GameDAO implements IGameDAO {
      * @return
      */
     @Override
-    public IDTO readData(IDTO dto) {
+    public IDTO getGameModel(IDTO dto) {
         return null;
     }
 
@@ -37,7 +37,7 @@ public class GameDAO implements IGameDAO {
      * @param dto
      */
     @Override
-    public void updateData(IDTO dto) {
+    public void updateGame(IDTO dto) {
 
     }
 
@@ -48,7 +48,12 @@ public class GameDAO implements IGameDAO {
      * @param dto
      */
     @Override
-    public void deleteData(IDTO dto) {
+    public void deleteAllGames(IDTO dto) {
+
+    }
+
+    @Override
+    public void deleteGame(IDTO dto) {
 
     }
 }
