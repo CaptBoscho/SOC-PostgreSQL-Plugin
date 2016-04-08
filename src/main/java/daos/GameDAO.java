@@ -4,9 +4,7 @@ import database.Database;
 import dto.*;
 import exceptions.GameTableException;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -51,7 +49,7 @@ public class GameDAO implements IGameDAO {
             ResultSet rs = stmt.executeQuery( "SELECT * FROM GAMES WHERE GAMEID = "
                     + ((GetGameBlobDTO) dto).getGameID() +";");
             while( rs.next()){
-                ((GetGameBlobDTO) dto).setGameState(rs.getString("state"));
+                ((GetGameBlobDTO) dto).setGameState(rs.getBlob("state"));
             }
             rs.close();
             stmt.close();
@@ -61,7 +59,7 @@ public class GameDAO implements IGameDAO {
             while (rs.next()){
                 GameDTO game = new GameDTO();
                 game.setGameID(rs.getInt("id"));
-                game.setState(rs.getString("state"));
+                game.setState(rs.getBlob("state"));
                 ((GetAllGamesDTO) dto).addGame(game);
             }
             rs.close();

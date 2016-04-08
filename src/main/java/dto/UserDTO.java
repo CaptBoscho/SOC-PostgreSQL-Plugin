@@ -8,6 +8,16 @@ public class UserDTO {
     private String name;
     private String userName;
     private String password;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     public UserDTO(){}
 

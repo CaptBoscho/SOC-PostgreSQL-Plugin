@@ -47,9 +47,9 @@ public class Database implements IDatabase {
             Statement users = this.connection.createStatement();
             String sqlUser = "CREATE TABLE USERS " +
                          "(ID INT PRIMARY KEY   NOT NULL," +
-                         " NAME            TEXT  NOT NULL, " +
-                         " USERNAME        TEXT  NOT NULL, " +
-                         " PASSWORD        TEXT  NOT NULL)";
+                         " NAME         VARCHAR(50)  NOT NULL, " +
+                         " USERNAME     VARCHAR(50)  NOT NULL, " +
+                         " PASSWORD     VARCHAR(50)  NOT NULL)";
             users.executeUpdate(sqlUser);
             users.close();
 
@@ -58,14 +58,15 @@ public class Database implements IDatabase {
                                  "(ID INT PRIMARY KEY   NOT NULL," +
                                  " GAMEID       INT     NOT NULL," +
                                  " VERSION      INT     NOT NULL," +
-                                 " COMMAND      OBJECT  NOT NULL)";
+                                 " COMMAND      BLOB    NOT NULL)";
             commands.execute(sqlCommands);
             commands.close();
 
             Statement games = this.connection.createStatement();
             String sqlGames =   "CREATE TABLE GAMES" +
                                 "(ID INT PRIMARY KEY    NOT NULL," +
-                                " STATE         TEXT    NOT NULL)";
+                                " TITLE     VARCHAR(50) NOT NULL," +
+                                " STATE         BLOB    NOT NULL)";
             games.execute(sqlGames);
             games.close();
             System.out.println("Tables initialized");

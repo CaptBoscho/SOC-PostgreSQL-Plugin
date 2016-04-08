@@ -54,6 +54,7 @@ public class UserDAO implements IUserDAO {
             ResultSet rs = stmt.executeQuery("SELECT * FROM USERS;");
             while(rs.next()){
                 UserDTO user = new UserDTO();
+                user.setId(rs.getInt("id"));
                 user.setName(rs.getString("name"));
                 user.setUserName(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
