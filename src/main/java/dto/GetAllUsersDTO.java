@@ -15,6 +15,10 @@ public class GetAllUsersDTO implements IDTO {
         this.users = users;
     }
 
+    public void addUser(UserDTO user){
+        users.add(user);
+    }
+
     //Strings stored in JSON format
     List<UserDTO> users;
 }

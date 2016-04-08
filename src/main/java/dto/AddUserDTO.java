@@ -6,10 +6,17 @@ package dto;
  */
 public class AddUserDTO implements IDTO {
 
+    public AddUserDTO() {
+    }
 
+    private int id;
     private String name;
     private String userName;
     private String password;
+
+    public int getID(){return id;}
+
+    public void setID(int id){ this.id = id;}
 
     public String getName() {
         return name;

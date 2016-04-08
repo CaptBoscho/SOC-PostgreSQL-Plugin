@@ -9,6 +9,8 @@ public class UserDTO {
     private String userName;
     private String password;
 
+    public UserDTO(){}
+
     public String getPassword() {
         return password;
     }

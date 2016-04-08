@@ -1,6 +1,12 @@
 package daos;
 
-import dto.IDTO;
+import database.Database;
+import dto.*;
+import exceptions.GameTableException;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Created by Kyle 'TMD' Cornelison on 4/2/2016.
@@ -14,21 +20,53 @@ public class GameDAO implements IGameDAO {
      * @param dto
      */
     @Override
-    public void addGameObject(IDTO dto) {
-
+    public void addGameObject(IDTO dto) throws GameTableException, SQLException {
+        if(dto instanceof NewGameDTO){
+            Statement stmt = Database.getInstance().getConnection().createStatement();
+            String sql = "INSERT INTO GAMES (ID,STATE) "
+                    + "VALUES (" + ((NewGameDTO) dto).getGameID() + ", " + ((NewGameDTO) dto).getGameState() + " );";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            Database.getInstance().getConnection().commit();
+        } else {
+            throw new GameTableException("wrong DTO");
+        }
     }
 
     /**
      * Handles verifying user which returns userID
      * Getting the current game model
      * getting a list of Commands
-     *
+     * for just the getGameBlobDto, should only go through once
      * @param dto
      * @return
      */
     @Override
-    public IDTO getGameModel(IDTO dto) {
-        return null;
+    public IDTO getGameModel(IDTO dto) throws SQLException, GameTableException {
+        Statement stmt = Database.getInstance().getConnection().createStatement();
+        if(dto instanceof GetGameBlobDTO){
+            ResultSet rs = stmt.executeQuery( "SELECT * FROM GAMES WHERE GAMEID = "
+                    + ((GetGameBlobDTO) dto).getGameID() +";");
+            while( rs.next()){
+                ((GetGameBlobDTO) dto).setGameState(rs.getString("state"));
+            }
+            rs.close();
+            stmt.close();
+            return dto;
+        } else if(dto instanceof GetAllGamesDTO){
+            ResultSet rs = stmt.executeQuery("SELECT * FROM GAMES;");
+            while (rs.next()){
+                GameDTO game = new GameDTO();
+                game.setGameID(rs.getInt("id"));
+                game.setState(rs.getString("state"));
+                ((GetAllGamesDTO) dto).addGame(game);
+            }
+            rs.close();
+            stmt.close();
+            return dto;
+        } else {
+            throw new GameTableException("wrong dto");
+        }
     }
 
     /**

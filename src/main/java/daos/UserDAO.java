@@ -1,6 +1,15 @@
 package daos;
 
+import database.Database;
+import dto.AddUserDTO;
+import dto.GetAllUsersDTO;
 import dto.IDTO;
+import dto.UserDTO;
+import exceptions.UserTableException;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Created by Kyle 'TMD' Cornelison on 4/2/2016.
@@ -15,8 +24,19 @@ public class UserDAO implements IUserDAO {
      * @param dto
      */
     @Override
-    public void addUser(IDTO dto) {
+    public void addUser(IDTO dto) throws UserTableException, SQLException {
+        if(dto instanceof AddUserDTO){
+            Statement stmt = Database.getInstance().getConnection().createStatement();
+            String sql = "INSERT INTO USERS (ID,NAME,USERNAME,PASSWORD) "
+                    + "VALUES (" + ((AddUserDTO) dto).getID() + ", " + ((AddUserDTO) dto).getName() + ", "
+                    + ((AddUserDTO) dto).getUserName() + ", " + ((AddUserDTO) dto).getPassword() + " );";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            Database.getInstance().getConnection().commit();
 
+        } else {
+            throw new UserTableException("Wrong DTO");
+        }
     }
 
     /**
@@ -28,8 +48,24 @@ public class UserDAO implements IUserDAO {
      * @return
      */
     @Override
-    public IDTO getUsers(IDTO dto) {
-        return null;
+    public IDTO getUsers(IDTO dto) throws SQLException, UserTableException {
+        if(dto instanceof GetAllUsersDTO) {
+            Statement stmt = Database.getInstance().getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM USERS;");
+            while(rs.next()){
+                UserDTO user = new UserDTO();
+                user.setName(rs.getString("name"));
+                user.setUserName(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                ((GetAllUsersDTO) dto).addUser(user);
+            }
+            rs.close();
+            stmt.close();
+            return dto;
+        } else {
+            throw new UserTableException("wrong dto");
+        }
+
     }
 
 

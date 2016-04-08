@@ -9,13 +9,17 @@ import java.util.Objects;
  */
 public class GetAllCommandsDTO implements IDTO {
 
-    public List<Objects> getAllCommands() {
+    public List<CommandDTO> getAllCommands() {
         return allCommands;
     }
 
-    public void setAllCommands(List<Objects> allCommands) {
+    public void setAllCommands(List<CommandDTO> allCommands) {
         this.allCommands = allCommands;
     }
 
-    List<Objects> allCommands;
+    public void addCommand(CommandDTO command){
+        allCommands.add(command);
+    }
+
+    List<CommandDTO> allCommands;
 }

@@ -1,5 +1,8 @@
 package dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Get Commands that coincide with gameID
  * Created by boscho on 4/6/16.
@@ -7,23 +10,18 @@ package dto;
 public class GetCommandsDTO implements IDTO {
 
     private int gameID;
-    private Object iCommand;
-    private int version;
+    private List<CommandDTO> commands;
 
-    public int getVersion() {
-        return version;
+    public GetCommandsDTO(){
+        commands = new ArrayList<>();
     }
 
-    public void setVersion(int version) {
-        this.version = version;
+    public List<CommandDTO> getCommands() {
+        return commands;
     }
 
-    public Object getiCommand() {
-        return iCommand;
-    }
-
-    public void setiCommand(Object iCommand) {
-        this.iCommand = iCommand;
+    public void setCommands(List<CommandDTO> commands) {
+        this.commands = commands;
     }
 
     public int getGameID() {
@@ -33,6 +31,11 @@ public class GetCommandsDTO implements IDTO {
     public void setGameID(int gameID) {
         this.gameID = gameID;
     }
+
+    public void addCommand(CommandDTO command){
+        this.commands.add(command);
+    }
+
 
 
 }

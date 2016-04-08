@@ -7,14 +7,18 @@ import java.util.List;
  */
 public class GetAllGamesDTO {
 
-    public List<String> getGameStates() {
+    public List<GameDTO> getGameStates() {
         return gameStates;
     }
 
-    public void setGameStates(List<String> gameStates) {
+    public void setGameStates(List<GameDTO> gameStates) {
         this.gameStates = gameStates;
     }
 
+    public void addGame(GameDTO game){
+        gameStates.add(game);
+    }
+
     //Json in form of string
-    List<String> gameStates;
+    List<GameDTO> gameStates;
 }

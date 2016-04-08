@@ -1,6 +1,9 @@
 package daos;
 
 import dto.IDTO;
+import exceptions.CommandTableException;
+
+import java.sql.SQLException;
 
 /**
  * Created by Kyle 'TMD' Cornelison on 4/5/2016.
@@ -12,7 +15,7 @@ public interface ICommandDAO {
      * adding a game
      * @param dto
      */
-    void addCommand(IDTO dto);
+    void addCommand(IDTO dto) throws CommandTableException, SQLException;
 
     /**
      * Handles verifying user which returns userID
@@ -21,7 +24,7 @@ public interface ICommandDAO {
      * @param dto
      * @return
      */
-    IDTO getCommands(IDTO dto);
+    IDTO getCommands(IDTO dto) throws CommandTableException, SQLException;
 
     /**
      * mostly be used for updating the game blob state
