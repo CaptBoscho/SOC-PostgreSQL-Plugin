@@ -5,7 +5,7 @@ package database;
  */
 public interface IDatabase {
 
-    void init();
-
     void clear();
+
+    void shutdown();
 }

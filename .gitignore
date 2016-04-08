@@ -5,6 +5,9 @@
 bin/
 gen/
 
+# secrets
+db.properties
+
 # Local configuration file (sdk path, etc)
 local.properties
 
