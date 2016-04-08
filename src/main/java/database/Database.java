@@ -2,10 +2,7 @@ package database;
 
 import io.ConfigReader;
 
-import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 /**
@@ -27,7 +24,7 @@ public class Database implements IDatabase {
     private Database() {
         try {
             Class.forName("org.postgresql.Driver");
-            Properties properties = new ConfigReader().readConfig();
+            Properties properties = ConfigReader.readConfig();
             String dbName = properties.getProperty("dbname");
             String userName = properties.getProperty("username");
             String password = properties.getProperty("password");
@@ -43,7 +40,14 @@ public class Database implements IDatabase {
 
     @Override
     public void clear() {
-
+        try {
+            connection.setAutoCommit(false);
+            Statement st = this.connection.createStatement();
+            st.executeUpdate("DROP SCHEMA PUBLIC CASCADE");
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
