@@ -1,6 +1,10 @@
 package daos;
 
+import database.Database;
 import dto.IDTO;
+
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Created by Kyle 'TMD' Cornelison on 4/2/2016.
@@ -16,7 +20,11 @@ public class UserDAO implements IUserDAO {
      */
     @Override
     public void addUser(IDTO dto) {
-
+        try {
+            Statement st = Database.getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -29,6 +37,11 @@ public class UserDAO implements IUserDAO {
      */
     @Override
     public IDTO getUsers(IDTO dto) {
+        try {
+            Statement st = Database.getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -41,6 +54,10 @@ public class UserDAO implements IUserDAO {
      */
     @Override
     public void deleteUsers(IDTO dto) {
-
+        try {
+            Statement st = Database.getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

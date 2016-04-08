@@ -1,6 +1,10 @@
 package daos;
 
+import database.Database;
 import dto.IDTO;
+
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Created by Kyle 'TMD' Cornelison on 4/2/2016.
@@ -15,7 +19,11 @@ public class GameDAO implements IGameDAO {
      */
     @Override
     public void addGameObject(IDTO dto) {
-
+        try {
+            Statement st = Database.getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -28,6 +36,11 @@ public class GameDAO implements IGameDAO {
      */
     @Override
     public IDTO getGameModel(IDTO dto) {
+        try {
+            Statement st = Database.getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -38,7 +51,11 @@ public class GameDAO implements IGameDAO {
      */
     @Override
     public void updateGame(IDTO dto) {
-
+        try {
+            Statement st = Database.getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -49,11 +66,19 @@ public class GameDAO implements IGameDAO {
      */
     @Override
     public void deleteAllGames(IDTO dto) {
-
+        try {
+            Statement st = Database.getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void deleteGame(IDTO dto) {
-
+        try {
+            Statement st = Database.getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

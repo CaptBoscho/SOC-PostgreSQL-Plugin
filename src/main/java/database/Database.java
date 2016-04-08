@@ -21,6 +21,10 @@ public class Database implements IDatabase {
         return instance;
     }
 
+    public static Connection getConnection() {
+        return getInstance().connection;
+    }
+
     private Database() {
         try {
             Class.forName("org.postgresql.Driver");
