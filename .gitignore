@@ -2,7 +2,6 @@
 *.class
 
 # generated files
-bin/
 gen/
 
 # secrets

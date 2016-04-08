@@ -18,6 +18,12 @@ task fatJar(type: Jar) {
     with jar
 }
 
+task runPython(type:Exec) {
+    workingDir './scripts/'
+
+    commandLine 'python', 'setup_aws.py'
+}
+
 repositories {
     mavenCentral()
 }
