@@ -15,7 +15,7 @@ public class UserDAO implements IUserDAO {
      * @param dto
      */
     @Override
-    public void addObject(IDTO dto) {
+    public void addUser(IDTO dto) {
 
     }
 
@@ -28,19 +28,10 @@ public class UserDAO implements IUserDAO {
      * @return
      */
     @Override
-    public IDTO readData(IDTO dto) {
+    public IDTO getUsers(IDTO dto) {
         return null;
     }
 
-    /**
-     * mostly be used for updating the game blob state
-     *
-     * @param dto
-     */
-    @Override
-    public void updateData(IDTO dto) {
-
-    }
 
     /**
      * Mostly be used for deleting commands every n
@@ -49,7 +40,7 @@ public class UserDAO implements IUserDAO {
      * @param dto
      */
     @Override
-    public void deleteData(IDTO dto) {
+    public void deleteUsers(IDTO dto) {
 
     }
 }

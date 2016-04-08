@@ -1,18 +1,20 @@
 package daos;
 
+
 import dto.IDTO;
 
 /**
- * Created by Kyle 'TMD' Cornelison on 4/5/2016.
+ * Created by boscho on 4/4/16.
  */
-public interface IGameDAO {
+public interface IDAO {
+
     /**
      * Handles adding a user,
      * adding a command
      * adding a game
      * @param dto
      */
-    void addGameObject(IDTO dto);
+    void addObject(IDTO dto);
 
     /**
      * Handles verifying user which returns userID
@@ -21,23 +23,19 @@ public interface IGameDAO {
      * @param dto
      * @return
      */
-    IDTO getGameModel(IDTO dto);
+    IDTO readData(IDTO dto);
 
     /**
      * mostly be used for updating the game blob state
      * @param dto
      */
-    void updateGame(IDTO dto);
+    void updateData(IDTO dto);
 
     /**
-     * Deletes all games
+     * Mostly be used for deleting commands every n
+     * moves.
      * @param dto
      */
-    void deleteAllGames(IDTO dto);
+    void deleteData(IDTO dto);
 
-    /**
-     * Deletes a game
-     * @param dto
-     */
-    void deleteGame(IDTO dto);
 }
