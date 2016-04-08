@@ -30,17 +30,17 @@ public interface IGameDAO {
      * mostly be used for updating the game blob state
      * @param dto
      */
-    void updateGame(IDTO dto);
+    void updateGame(IDTO dto) throws GameTableException, SQLException;
 
     /**
      * Deletes all games
      * @param dto
      */
-    void deleteAllGames(IDTO dto);
+    void deleteAllGames(IDTO dto) throws SQLException, GameTableException;
 
     /**
      * Deletes a game
      * @param dto
      */
-    void deleteGame(IDTO dto);
+    void deleteGame(IDTO dto) throws GameTableException, SQLException;
 }

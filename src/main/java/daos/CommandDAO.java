@@ -63,12 +63,28 @@ public class CommandDAO implements ICommandDAO {
     }
 
     @Override
-    public void deleteAllCommands(IDTO dto) {
-
+    public void deleteAllCommands(IDTO dto) throws CommandTableException, SQLException {
+        if(dto instanceof DeleteAllCommandsDTO){
+            Statement stmt = Database.getInstance().getConnection().createStatement();
+            String sql = "DELETE FROM COMMANDS;";
+            stmt.executeUpdate(sql);
+            Database.getInstance().getConnection().commit();
+            stmt.close();
+        } else {
+            throw new CommandTableException("wrong dto");
+        }
     }
 
     @Override
-    public void deleteCommandsFromGame(IDTO dto) {
-
+    public void deleteCommandsFromGame(IDTO dto) throws CommandTableException, SQLException {
+        if(dto instanceof DeleteCommandsDTO){
+            Statement stmt = Database.getInstance().getConnection().createStatement();
+            String sql = "DELETE from COMMANDS where GAMEID=" + ((DeleteCommandsDTO) dto).getGameID() + ";";
+            stmt.executeUpdate(sql);
+            Database.getInstance().getConnection().commit();
+            stmt.close();
+        } else {
+            throw new CommandTableException("wrong dto");
+        }
     }
 }

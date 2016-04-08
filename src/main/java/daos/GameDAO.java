@@ -75,8 +75,17 @@ public class GameDAO implements IGameDAO {
      * @param dto
      */
     @Override
-    public void updateGame(IDTO dto) {
-
+    public void updateGame(IDTO dto) throws GameTableException, SQLException {
+        if(dto instanceof UpdateGameDTO){
+            Statement stmt = Database.getInstance().getConnection().createStatement();
+            String sql = "UPDATE GAME set STATE = " + ((UpdateGameDTO) dto).getGameState()
+                    + "where GAMEID=" + ((UpdateGameDTO) dto).getGameID() + ";";
+            stmt.executeUpdate(sql);
+            Database.getInstance().getConnection().commit();
+            stmt.close();
+        } else {
+            throw new GameTableException("wrong dto");
+        }
     }
 
     /**
@@ -86,12 +95,28 @@ public class GameDAO implements IGameDAO {
      * @param dto
      */
     @Override
-    public void deleteAllGames(IDTO dto) {
-
+    public void deleteAllGames(IDTO dto) throws SQLException, GameTableException {
+        if(dto instanceof DeleteAllGamesDTO){
+            Statement stmt = Database.getInstance().getConnection().createStatement();
+            String sql = "DELETE FROM GAMES;";
+            stmt.executeUpdate(sql);
+            Database.getInstance().getConnection().commit();
+            stmt.close();
+        } else {
+            throw new GameTableException("wrong dto");
+        }
     }
 
     @Override
-    public void deleteGame(IDTO dto) {
-
+    public void deleteGame(IDTO dto) throws GameTableException, SQLException {
+        if(dto instanceof  DeleteGameDTO){
+            Statement stmt = Database.getInstance().getConnection().createStatement();
+            String sql = "DELETE FROM GAMES where " + ((DeleteGameDTO) dto).getGameID() + ";";
+            stmt.executeUpdate(sql);
+            Database.getInstance().getConnection().commit();
+            stmt.close();
+        } else {
+            throw new GameTableException("wrong dto");
+        }
     }
 }

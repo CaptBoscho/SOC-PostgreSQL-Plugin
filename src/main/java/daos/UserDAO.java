@@ -1,10 +1,7 @@
 package daos;
 
 import database.Database;
-import dto.AddUserDTO;
-import dto.GetAllUsersDTO;
-import dto.IDTO;
-import dto.UserDTO;
+import dto.*;
 import exceptions.UserTableException;
 
 import java.sql.ResultSet;
@@ -76,7 +73,16 @@ public class UserDAO implements IUserDAO {
      * @param dto
      */
     @Override
-    public void deleteUsers(IDTO dto) {
+    public void deleteUsers(IDTO dto) throws SQLException, UserTableException {
+        if(dto instanceof DeleteAllUsersDTO) {
+            Statement stmt = Database.getInstance().getConnection().createStatement();
+            String sql = "DELETE FROM USERS;";
+            stmt.executeUpdate(sql);
+            Database.getInstance().getConnection().commit();
+            stmt.close();
+        } else {
+            throw new UserTableException("wrong dto");
+        }
 
     }
 }

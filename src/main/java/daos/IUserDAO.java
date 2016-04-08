@@ -28,5 +28,5 @@ public interface IUserDAO {
      * delete a user
      * @param dto
      */
-    void deleteUsers(IDTO dto);
+    void deleteUsers(IDTO dto) throws SQLException, UserTableException;
 }

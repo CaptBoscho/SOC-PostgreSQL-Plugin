@@ -30,12 +30,12 @@ public interface ICommandDAO {
      * mostly be used for updating the game blob state
      * @param dto
      */
-    void deleteAllCommands(IDTO dto);
+    void deleteAllCommands(IDTO dto) throws CommandTableException, SQLException;
 
     /**
      * Mostly be used for deleting commands every n
      * moves.
      * @param dto
      */
-    void deleteCommandsFromGame(IDTO dto);
+    void deleteCommandsFromGame(IDTO dto) throws CommandTableException, SQLException;
 }
