@@ -26,8 +26,8 @@ public class GameDAO implements IGameDAO {
     public void addGameObject(GameDTO dto) throws GameTableException, SQLException {
         if(dto instanceof GameDTO){
             Statement stmt = Database.getConnection().createStatement();
-            String sql = "INSERT INTO GAMES (ID,STATE) "
-                    + "VALUES (" + dto.getGameID() + ", " + dto.getState() + " );";
+            String sql = "INSERT INTO GAMES (ID,TITLE,STATE) "
+                    + "VALUES (" + dto.getGameID() + ", " + dto.getTitle() + ", " + dto.getState() + " );";
             stmt.executeUpdate(sql);
             stmt.close();
             Database.getConnection().commit();
@@ -50,6 +50,7 @@ public class GameDAO implements IGameDAO {
                 + gameID +";");
         GameDTO dto = new GameDTO();
         dto.setGameID(gameID);
+        dto.setTitle(rs.getString("title"));
         dto.setState(rs.getBlob("state"));
         rs.close();
         stmt.close();
@@ -64,6 +65,7 @@ public class GameDAO implements IGameDAO {
         while (rs.next()){
             GameDTO game = new GameDTO();
             game.setGameID(rs.getInt("id"));
+            game.setTitle(rs.getString("title"));
             game.setState(rs.getBlob("state"));
             games.add(game);
         }
@@ -104,7 +106,7 @@ public class GameDAO implements IGameDAO {
     @Override
     public void deleteGame(int gameID) throws SQLException {
             Statement stmt = Database.getConnection().createStatement();
-            String sql = "DELETE FROM GAMES where " + gameID + ";";
+            String sql = "DELETE FROM GAMES where GAMEID=" + gameID + ";";
             stmt.executeUpdate(sql);
             Database.getConnection().commit();
             stmt.close();
