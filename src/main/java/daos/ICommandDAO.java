@@ -1,6 +1,11 @@
 package daos;
 
+import dto.CommandDTO;
 import dto.IDTO;
+import exceptions.CommandTableException;
+
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by Kyle 'TMD' Cornelison on 4/5/2016.
@@ -12,27 +17,26 @@ public interface ICommandDAO {
      * adding a game
      * @param dto
      */
-    void addCommand(IDTO dto);
+    void addCommand(CommandDTO dto) throws CommandTableException, SQLException;
 
     /**
      * Handles verifying user which returns userID
      * Getting the current game model
      * getting a list of Commands
-     * @param dto
      * @return
      */
-    IDTO getCommands(IDTO dto);
+    List<CommandDTO> getCommands(int gameID) throws CommandTableException, SQLException;
+
+    List<CommandDTO> getAllCommands() throws SQLException;
 
     /**
      * mostly be used for updating the game blob state
-     * @param dto
      */
-    void deleteAllCommands(IDTO dto);
+    void deleteAllCommands() throws CommandTableException, SQLException;
 
     /**
      * Mostly be used for deleting commands every n
      * moves.
-     * @param dto
      */
-    void deleteCommandsFromGame(IDTO dto);
+    void deleteCommandsFromGame(int gameID) throws CommandTableException, SQLException;
 }

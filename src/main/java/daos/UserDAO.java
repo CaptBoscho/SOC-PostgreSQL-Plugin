@@ -1,10 +1,17 @@
 package daos;
 
 import database.Database;
-import dto.IDTO;
+import dto.*;
+import exceptions.UserTableException;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Kyle 'TMD' Cornelison on 4/2/2016.
@@ -19,12 +26,14 @@ public class UserDAO implements IUserDAO {
      * @param dto
      */
     @Override
-    public void addUser(IDTO dto) {
-        try {
-            Statement st = Database.getConnection().createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void addUser(UserDTO dto) throws UserTableException, SQLException {
+        Statement stmt = Database.getConnection().createStatement();
+        String sql = "INSERT INTO USERS (ID,NAME,USERNAME,PASSWORD) "
+                + "VALUES (" + dto.getId() +  ", "
+                + dto.getUserName() + ", " + dto.getPassword() + " );";
+        stmt.executeUpdate(sql);
+        stmt.close();
+        Database.getConnection().commit();
     }
 
     /**
@@ -32,17 +41,23 @@ public class UserDAO implements IUserDAO {
      * Getting the current game model
      * getting a list of Commands
      *
-     * @param dto
      * @return
      */
     @Override
-    public IDTO getUsers(IDTO dto) {
-        try {
-            Statement st = Database.getConnection().createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public List<UserDTO> getUsers() throws SQLException, UserTableException {
+        Statement stmt = Database.getConnection().createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM USERS;");
+        List<UserDTO> users = new ArrayList<>();
+        while(rs.next()){
+            UserDTO user = new UserDTO();
+            user.setId(rs.getInt("id"));
+            user.setUserName(rs.getString("username"));
+            user.setPassword(rs.getString("password"));
+            users.add(user);
         }
-        return null;
+        rs.close();
+        stmt.close();
+        return users;
     }
 
 
@@ -50,14 +65,13 @@ public class UserDAO implements IUserDAO {
      * Mostly be used for deleting commands every n
      * moves.
      *
-     * @param dto
      */
     @Override
-    public void deleteUsers(IDTO dto) {
-        try {
-            Statement st = Database.getConnection().createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void deleteUsers() throws SQLException, UserTableException {
+        Statement stmt = Database.getConnection().createStatement();
+        String sql = "DELETE FROM USERS;";
+        stmt.executeUpdate(sql);
+        Database.getConnection().commit();
+        stmt.close();
     }
 }
