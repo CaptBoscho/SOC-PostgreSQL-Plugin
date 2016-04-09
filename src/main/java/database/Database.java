@@ -2,6 +2,11 @@ package database;
 
 import io.ConfigReader;
 
+import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.*;
 import java.util.Properties;
 
@@ -37,6 +42,34 @@ public class Database implements IDatabase {
             String jdbcUrl = "jdbc:postgresql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
             this.connection = DriverManager.getConnection(jdbcUrl);
             System.out.println("Database connected");
+
+            //Creating tables
+            Statement users = this.connection.createStatement();
+            String sqlUser = "CREATE TABLE USERS " +
+                         "(ID INT PRIMARY KEY   NOT NULL," +
+                         " USERNAME     VARCHAR(50)  NOT NULL, " +
+                         " PASSWORD     VARCHAR(50)  NOT NULL)";
+            users.executeUpdate(sqlUser);
+            users.close();
+
+            Statement commands = this.connection.createStatement();
+            String sqlCommands = "CREATE TABLE COMMANDS" +
+                                 "(ID INT PRIMARY KEY   NOT NULL," +
+                                 " GAMEID       INT     NOT NULL," +
+                                 " VERSION      INT     NOT NULL," +
+                                 " COMMANDBLOB  BLOB    NOT NULL)";
+            commands.execute(sqlCommands);
+            commands.close();
+
+            Statement games = this.connection.createStatement();
+            String sqlGames =   "CREATE TABLE GAMES" +
+                                "(ID INT PRIMARY KEY    NOT NULL," +
+                                " TITLE     VARCHAR(50) NOT NULL," +
+                                " STATE         BLOB    NOT NULL)";
+            games.execute(sqlGames);
+            games.close();
+            System.out.println("Tables initialized");
+
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
