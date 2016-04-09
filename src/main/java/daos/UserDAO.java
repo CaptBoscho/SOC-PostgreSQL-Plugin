@@ -29,7 +29,7 @@ public class UserDAO implements IUserDAO {
     public void addUser(UserDTO dto) throws UserTableException, SQLException {
         Statement stmt = Database.getConnection().createStatement();
         String sql = "INSERT INTO USERS (ID,NAME,USERNAME,PASSWORD) "
-                + "VALUES (" + dto.getId() + ", " + dto.getName() + ", "
+                + "VALUES (" + dto.getId() +  ", "
                 + dto.getUserName() + ", " + dto.getPassword() + " );";
         stmt.executeUpdate(sql);
         stmt.close();
@@ -51,7 +51,6 @@ public class UserDAO implements IUserDAO {
         while(rs.next()){
             UserDTO user = new UserDTO();
             user.setId(rs.getInt("id"));
-            user.setName(rs.getString("name"));
             user.setUserName(rs.getString("username"));
             user.setPassword(rs.getString("password"));
             users.add(user);

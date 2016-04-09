@@ -24,23 +24,16 @@ public class GameDAO implements IGameDAO {
      */
     @Override
     public void addGameObject(GameDTO dto) throws GameTableException, SQLException {
-        if(dto instanceof GameDTO){
-            Statement stmt = Database.getConnection().createStatement();
-            String sql = "INSERT INTO GAMES (ID,TITLE,STATE) "
-                    + "VALUES (" + dto.getGameID() + ", " + dto.getTitle() + ", " + dto.getState() + " );";
-            stmt.executeUpdate(sql);
-            stmt.close();
-            Database.getConnection().commit();
-        } else {
-            throw new GameTableException("wrong DTO");
-        }
+        Statement stmt = Database.getConnection().createStatement();
+        String sql = "INSERT INTO GAMES (ID,TITLE,STATE) "
+                + "VALUES (" + dto.getGameID() + ", " + dto.getTitle() + ", " + dto.getState() + " );";
+        stmt.executeUpdate(sql);
+        stmt.close();
+        Database.getConnection().commit();
     }
 
     /**
-     * Handles verifying user which returns userID
      * Getting the current game model
-     * getting a list of Commands
-     * for just the getGameBlobDto, should only go through once
      * @return
      */
     @Override
@@ -75,7 +68,7 @@ public class GameDAO implements IGameDAO {
     }
 
     /**
-     * mostly be used for updating the game blob state
+     * used for updating the game blob state
      *
      * @param dto
      */
@@ -90,9 +83,7 @@ public class GameDAO implements IGameDAO {
     }
 
     /**
-     * Mostly be used for deleting commands every n
-     * moves.
-     *
+     * Deletes all Games
      */
     @Override
     public void deleteAllGames() throws SQLException{

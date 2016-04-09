@@ -22,7 +22,7 @@ public class CommandDAO implements ICommandDAO {
     @Override
     public void addCommand(CommandDTO dto) throws CommandTableException, SQLException {
         Statement stmt = Database.getConnection().createStatement();
-        String sql = "INSERT INTO COMMANDS (GAMEID,VERSION,COMMAND) "
+        String sql = "INSERT INTO COMMANDS (GAMEID,VERSION,COMMANDBLOB) "
                 + "VALUES (" + dto.getGameID() + ", " + dto.getVersion() +
                 ", " + dto.getCommand() + " );";
         stmt.executeUpdate(sql);
@@ -39,7 +39,7 @@ public class CommandDAO implements ICommandDAO {
         while (rs.next()){
             CommandDTO command = new CommandDTO();
             command.setVersion(rs.getInt("version"));
-            command.setCommand(rs.getBlob("command"));
+            command.setCommand(rs.getBlob("commandblob"));
             commands.add(command);
         }
         rs.close();
@@ -56,7 +56,7 @@ public class CommandDAO implements ICommandDAO {
             CommandDTO command = new CommandDTO();
             command.setGameID(rs.getInt("gameid"));
             command.setVersion(rs.getInt("version"));
-            command.setCommand(rs.getBlob("command"));
+            command.setCommand(rs.getBlob("commandblob"));
             commands.add(command);
         }
         rs.close();

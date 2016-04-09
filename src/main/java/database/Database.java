@@ -47,7 +47,6 @@ public class Database implements IDatabase {
             Statement users = this.connection.createStatement();
             String sqlUser = "CREATE TABLE USERS " +
                          "(ID INT PRIMARY KEY   NOT NULL," +
-                         " NAME         VARCHAR(50)  NOT NULL, " +
                          " USERNAME     VARCHAR(50)  NOT NULL, " +
                          " PASSWORD     VARCHAR(50)  NOT NULL)";
             users.executeUpdate(sqlUser);
@@ -58,7 +57,7 @@ public class Database implements IDatabase {
                                  "(ID INT PRIMARY KEY   NOT NULL," +
                                  " GAMEID       INT     NOT NULL," +
                                  " VERSION      INT     NOT NULL," +
-                                 " COMMAND      BLOB    NOT NULL)";
+                                 " COMMANDBLOB  BLOB    NOT NULL)";
             commands.execute(sqlCommands);
             commands.close();
 
