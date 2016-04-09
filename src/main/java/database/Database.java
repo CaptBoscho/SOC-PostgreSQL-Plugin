@@ -57,7 +57,7 @@ public class Database implements IDatabase {
                                  "(ID SERIAL PRIMARY KEY," +
                                  " GAMEID       INT     NOT NULL," +
                                  " VERSION      INT     NOT NULL," +
-                                 " COMMANDBLOB  BLOB    NOT NULL)";
+                                 " COMMANDBLOB  TEXT    NOT NULL)";
             commands.execute(sqlCommands);
             commands.close();
 
@@ -65,7 +65,7 @@ public class Database implements IDatabase {
             String sqlGames =   "CREATE TABLE GAMES" +
                                 "(ID INT PRIMARY KEY    NOT NULL," +
                                 " TITLE     VARCHAR(50) NOT NULL," +
-                                " STATE         BLOB    NOT NULL)";
+                                " STATE     TEXT        NOT NULL)";
             games.execute(sqlGames);
             games.close();
             System.out.println("Tables initialized");
