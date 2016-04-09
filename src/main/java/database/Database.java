@@ -54,7 +54,7 @@ public class Database implements IDatabase {
 
             Statement commands = this.connection.createStatement();
             String sqlCommands = "CREATE TABLE COMMANDS" +
-                                 "(ID INT PRIMARY KEY   NOT NULL," +
+                                 "(ID SERIAL PRIMARY KEY," +
                                  " GAMEID       INT     NOT NULL," +
                                  " VERSION      INT     NOT NULL," +
                                  " COMMANDBLOB  BLOB    NOT NULL)";
