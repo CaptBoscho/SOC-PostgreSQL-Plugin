@@ -1,15 +1,13 @@
 package daos;
 
 import database.Database;
-import dto.*;
 import exceptions.CommandTableException;
+import server.persistence.dto.CommandDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 

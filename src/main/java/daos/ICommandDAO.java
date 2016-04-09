@@ -1,7 +1,6 @@
 package daos;
 
-import dto.CommandDTO;
-import dto.IDTO;
+import server.persistence.dto.CommandDTO;
 import exceptions.CommandTableException;
 
 import java.sql.SQLException;
