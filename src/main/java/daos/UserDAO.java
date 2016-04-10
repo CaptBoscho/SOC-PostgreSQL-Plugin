@@ -1,6 +1,6 @@
 package daos;
 
-import database.Database;
+import server.persistence.Database;
 import server.persistence.dto.UserDTO;
 
 import java.sql.ResultSet;

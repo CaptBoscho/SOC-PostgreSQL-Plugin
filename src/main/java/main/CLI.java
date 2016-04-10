@@ -1,6 +1,6 @@
 package main;
 
-import database.Database;
+import server.persistence.Database;
 
 import java.util.Scanner;
 

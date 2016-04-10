@@ -1,8 +1,7 @@
-package database;
+package server.persistence;
 
 import daos.GameDAO;
 import io.ConfigReader;
-import server.persistence.IDatabase;
 import server.persistence.dto.GameDTO;
 
 import java.sql.Connection;
@@ -31,7 +30,7 @@ public class Database implements IDatabase {
         return getInstance().connection;
     }
 
-    private Database() {
+    public Database() {
         try {
             Class.forName("org.postgresql.Driver");
             Properties properties = ConfigReader.readConfig();
