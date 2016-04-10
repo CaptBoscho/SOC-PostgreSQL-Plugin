@@ -37,7 +37,7 @@ public class CommandDAO implements ICommandDAO {
         while (rs.next()){
             CommandDTO command = new CommandDTO();
             command.setVersion(rs.getInt("version"));
-            command.setCommand(rs.getBlob("commandblob"));
+            command.setCommand(rs.getString("commandblob"));
             commands.add(command);
         }
         rs.close();
@@ -54,7 +54,7 @@ public class CommandDAO implements ICommandDAO {
             CommandDTO command = new CommandDTO();
             command.setGameID(rs.getInt("gameid"));
             command.setVersion(rs.getInt("version"));
-            command.setCommand(rs.getBlob("commandblob"));
+            command.setCommand(rs.getString("commandblob"));
             commands.add(command);
         }
         rs.close();

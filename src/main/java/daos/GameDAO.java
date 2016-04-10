@@ -44,7 +44,7 @@ public class GameDAO implements IGameDAO {
         GameDTO dto = new GameDTO();
         dto.setGameID(gameID);
         dto.setTitle(rs.getString("title"));
-        dto.setState(rs.getBlob("state"));
+        dto.setState(rs.getString("state"));
         rs.close();
         stmt.close();
         return dto;
@@ -59,7 +59,7 @@ public class GameDAO implements IGameDAO {
             GameDTO game = new GameDTO();
             game.setGameID(rs.getInt("id"));
             game.setTitle(rs.getString("title"));
-            game.setState(rs.getBlob("state"));
+            game.setState(rs.getString("state"));
             games.add(game);
         }
         rs.close();
