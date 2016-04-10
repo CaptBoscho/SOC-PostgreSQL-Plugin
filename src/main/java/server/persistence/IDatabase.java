@@ -12,6 +12,4 @@ public interface IDatabase {
     void shutdown();
 
     void addGame(GameDTO dto);
-
-
 }

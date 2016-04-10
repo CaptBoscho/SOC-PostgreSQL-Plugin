@@ -10,7 +10,11 @@ public class CommandDTO {
     private String command;
     private int gameID;
 
-    public CommandDTO(){}
+    public CommandDTO(int gameID, int version, String command) {
+        this.gameID = gameID;
+        this.version = version;
+        this.command = command;
+    }
 
     public String getCommand() {
         return command;
@@ -30,10 +34,6 @@ public class CommandDTO {
 
     public int getGameID(){
         return gameID;
-    }
-
-    public void setGameID(int game){
-        gameID = game;
     }
 
 }

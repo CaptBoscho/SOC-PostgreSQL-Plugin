@@ -9,6 +9,12 @@ public class GameDTO {
     private String state;
     private String title;
 
+    public GameDTO(int gameID, String title, String state) {
+        this.gameID = gameID;
+        this.title = title;
+        this.state = state;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -17,16 +23,8 @@ public class GameDTO {
         this.title = title;
     }
 
-
-    public GameDTO() {
-    }
-
     public int getGameID() {
         return gameID;
-    }
-
-    public void setGameID(int gameID) {
-        this.gameID = gameID;
     }
 
     public String getState() {
@@ -36,7 +34,4 @@ public class GameDTO {
     public void setState(String state) {
         this.state = state;
     }
-
-
-
 }
