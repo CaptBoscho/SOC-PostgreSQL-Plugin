@@ -18,7 +18,7 @@ public class CommandDAO implements ICommandDAO {
 
 
     @Override
-    public void addCommand(CommandDTO dto) throws CommandTableException, SQLException {
+    public void addCommand(CommandDTO dto) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
         String sql = "INSERT INTO COMMANDS (GAMEID,VERSION,COMMANDBLOB) "
                 + "VALUES (" + dto.getGameID() + ", " + dto.getVersion() +
@@ -29,7 +29,7 @@ public class CommandDAO implements ICommandDAO {
     }
 
     @Override
-    public List<CommandDTO> getCommands(int gameID) throws CommandTableException, SQLException {
+    public List<CommandDTO> getCommands(int gameID) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
         ResultSet rs = stmt.executeQuery( "SELECT * FROM COMMANDS WHERE GAMEID = "
                 + gameID + ";" );
@@ -63,7 +63,7 @@ public class CommandDAO implements ICommandDAO {
     }
 
     @Override
-    public void deleteAllCommands() throws CommandTableException, SQLException {
+    public void deleteAllCommands() throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
         String sql = "DELETE FROM COMMANDS;";
         stmt.executeUpdate(sql);
@@ -72,7 +72,7 @@ public class CommandDAO implements ICommandDAO {
     }
 
     @Override
-    public void deleteCommandsFromGame(int gameID) throws CommandTableException, SQLException {
+    public void deleteCommandsFromGame(int gameID) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
         String sql = "DELETE from COMMANDS where GAMEID=" + gameID + ";";
         stmt.executeUpdate(sql);

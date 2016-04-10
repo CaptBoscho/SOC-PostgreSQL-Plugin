@@ -23,7 +23,7 @@ public class GameDAO implements IGameDAO {
      * @param dto
      */
     @Override
-    public void addGameObject(GameDTO dto) throws GameTableException, SQLException {
+    public void addGameObject(GameDTO dto) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
         String sql = "INSERT INTO GAMES (ID,TITLE,STATE) "
                 + "VALUES (" + dto.getGameID() + ", " + dto.getTitle() + ", " + dto.getState() + " );";
@@ -37,7 +37,7 @@ public class GameDAO implements IGameDAO {
      * @return
      */
     @Override
-    public GameDTO getGameModel(int gameID) throws SQLException, GameTableException {
+    public GameDTO getGameModel(int gameID) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
         ResultSet rs = stmt.executeQuery( "SELECT * FROM GAMES WHERE GAMEID = "
                 + gameID +";");

@@ -24,7 +24,7 @@ public class UserDAO implements IUserDAO {
      * @param dto
      */
     @Override
-    public void addUser(UserDTO dto) throws UserTableException, SQLException {
+    public void addUser(UserDTO dto) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
         String sql = "INSERT INTO USERS (ID,NAME,USERNAME,PASSWORD) "
                 + "VALUES (" + dto.getId() +  ", "
@@ -42,7 +42,7 @@ public class UserDAO implements IUserDAO {
      * @return
      */
     @Override
-    public List<UserDTO> getUsers() throws SQLException, UserTableException {
+    public List<UserDTO> getUsers() throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM USERS;");
         List<UserDTO> users = new ArrayList<>();
@@ -65,7 +65,7 @@ public class UserDAO implements IUserDAO {
      *
      */
     @Override
-    public void deleteUsers() throws SQLException, UserTableException {
+    public void deleteUsers() throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
         String sql = "DELETE FROM USERS;";
         stmt.executeUpdate(sql);
