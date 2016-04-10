@@ -43,29 +43,37 @@ public class Database implements IDatabase {
             this.connection = DriverManager.getConnection(jdbcUrl);
             System.out.println("Database connected");
 
+            Statement db = this.connection.createStatement();
+            ResultSet myResult = db.executeQuery("select count(*) from pg_catalog.pg_database where datname = 'everyone' ;");
+            myResult.next();
+            if(myResult.getInt(1) == 0) {
+                db.executeUpdate("CREATE DATABASE everyone;");
+                db.executeUpdate("CREATE SCHEMA public;");
+            }
+
             //Creating tables
             Statement users = this.connection.createStatement();
-            String sqlUser = "CREATE TABLE USERS " +
-                         "(ID INT PRIMARY KEY   NOT NULL," +
-                         " USERNAME     VARCHAR(50)  NOT NULL, " +
-                         " PASSWORD     VARCHAR(50)  NOT NULL)";
+            String sqlUser = "CREATE TABLE IF NOT EXISTS USERS " +
+                    "(ID INT PRIMARY KEY   NOT NULL," +
+                    " USERNAME     VARCHAR(50)  NOT NULL, " +
+                    " PASSWORD     VARCHAR(50)  NOT NULL)";
             users.executeUpdate(sqlUser);
             users.close();
 
             Statement commands = this.connection.createStatement();
-            String sqlCommands = "CREATE TABLE COMMANDS" +
-                                 "(ID SERIAL PRIMARY KEY," +
-                                 " GAMEID       INT     NOT NULL," +
-                                 " VERSION      INT     NOT NULL," +
-                                 " COMMANDBLOB  TEXT    NOT NULL)";
+            String sqlCommands = "CREATE TABLE IF NOT EXISTS COMMANDS" +
+                    "(ID SERIAL PRIMARY KEY," +
+                    " GAMEID       INT     NOT NULL," +
+                    " VERSION      INT     NOT NULL," +
+                    " COMMANDBLOB  TEXT    NOT NULL)";
             commands.execute(sqlCommands);
             commands.close();
 
             Statement games = this.connection.createStatement();
-            String sqlGames =   "CREATE TABLE GAMES" +
-                                "(ID INT PRIMARY KEY    NOT NULL," +
-                                " TITLE     VARCHAR(50) NOT NULL," +
-                                " STATE     TEXT        NOT NULL)";
+            String sqlGames =   "CREATE TABLE IF NOT EXISTS GAMES" +
+                    "(ID INT PRIMARY KEY    NOT NULL," +
+                    " TITLE     VARCHAR(50) NOT NULL," +
+                    " STATE     TEXT        NOT NULL)";
             games.execute(sqlGames);
             games.close();
             System.out.println("Tables initialized");
