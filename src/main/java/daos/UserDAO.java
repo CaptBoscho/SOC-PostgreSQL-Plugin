@@ -1,7 +1,6 @@
 package daos;
 
 import database.Database;
-import exceptions.UserTableException;
 import server.persistence.dto.UserDTO;
 
 import java.sql.ResultSet;

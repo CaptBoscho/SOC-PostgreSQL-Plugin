@@ -1,7 +1,6 @@
 package daos;
 
 import database.Database;
-import exceptions.GameTableException;
 import server.persistence.dto.GameDTO;
 
 import java.sql.*;

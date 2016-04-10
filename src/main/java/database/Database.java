@@ -1,8 +1,9 @@
 package database;
 
+import daos.GameDAO;
 import io.ConfigReader;
+import server.persistence.dto.GameDTO;
 
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -20,7 +21,6 @@ public class Database implements IDatabase {
 
     public static Database getInstance() {
         if(instance == null) {
-
             instance = new Database();
         }
         return instance;
@@ -43,7 +43,7 @@ public class Database implements IDatabase {
             this.connection = DriverManager.getConnection(jdbcUrl);
             System.out.println("Database connected");
 
-            Statement db = this.connection.createStatement();
+            final Statement db = this.connection.createStatement();
             ResultSet myResult = db.executeQuery("select count(*) from pg_catalog.pg_database where datname = 'everyone' ;");
             myResult.next();
             if(myResult.getInt(1) == 0) {
@@ -52,30 +52,9 @@ public class Database implements IDatabase {
             }
 
             //Creating tables
-            Statement users = this.connection.createStatement();
-            String sqlUser = "CREATE TABLE IF NOT EXISTS USERS " +
-                    "(ID INT PRIMARY KEY   NOT NULL," +
-                    " USERNAME     VARCHAR(50)  NOT NULL, " +
-                    " PASSWORD     VARCHAR(50)  NOT NULL)";
-            users.executeUpdate(sqlUser);
-            users.close();
-
-            Statement commands = this.connection.createStatement();
-            String sqlCommands = "CREATE TABLE IF NOT EXISTS COMMANDS" +
-                    "(ID SERIAL PRIMARY KEY," +
-                    " GAMEID       INT     NOT NULL," +
-                    " VERSION      INT     NOT NULL," +
-                    " COMMANDBLOB  TEXT    NOT NULL)";
-            commands.execute(sqlCommands);
-            commands.close();
-
-            Statement games = this.connection.createStatement();
-            String sqlGames =   "CREATE TABLE IF NOT EXISTS GAMES" +
-                    "(ID INT PRIMARY KEY    NOT NULL," +
-                    " TITLE     VARCHAR(50) NOT NULL," +
-                    " STATE     TEXT        NOT NULL)";
-            games.execute(sqlGames);
-            games.close();
+            this.createUsersTable();
+            this.createCommandsTable();
+            this.createGamesTable();
             System.out.println("Tables initialized");
 
         } catch (ClassNotFoundException | SQLException e) {
@@ -83,12 +62,43 @@ public class Database implements IDatabase {
         }
     }
 
+    private void createUsersTable() throws SQLException {
+        final Statement users = this.connection.createStatement();
+        String sqlUser = "CREATE TABLE IF NOT EXISTS USERS " +
+                "(ID INT PRIMARY KEY   NOT NULL," +
+                " USERNAME     VARCHAR(50)  NOT NULL, " +
+                " PASSWORD     VARCHAR(50)  NOT NULL)";
+        users.executeUpdate(sqlUser);
+        users.close();
+    }
+
+    private void createCommandsTable() throws SQLException {
+        final Statement commands = this.connection.createStatement();
+        String sqlCommands = "CREATE TABLE IF NOT EXISTS COMMANDS" +
+                "(ID SERIAL PRIMARY KEY," +
+                " GAMEID       INT     NOT NULL," +
+                " VERSION      INT     NOT NULL," +
+                " COMMANDBLOB  TEXT    NOT NULL)";
+        commands.execute(sqlCommands);
+        commands.close();
+    }
+
+    private void createGamesTable() throws SQLException {
+        final Statement games = this.connection.createStatement();
+        String sqlGames =   "CREATE TABLE IF NOT EXISTS GAMES" +
+                "(ID INT PRIMARY KEY    NOT NULL," +
+                " TITLE     VARCHAR(50) NOT NULL," +
+                " STATE     TEXT        NOT NULL)";
+        games.execute(sqlGames);
+        games.close();
+    }
+
     @Override
     public void clear() {
         try {
             connection.setAutoCommit(false);
             Statement st = this.connection.createStatement();
-            st.executeUpdate("DROP SCHEMA PUBLIC CASCADE");
+            st.executeUpdate("DROP SCHEMA public CASCADE");
             st.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,6 +109,15 @@ public class Database implements IDatabase {
     public void shutdown() {
         try {
             this.connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void addGame(GameDTO dto) {
+        try {
+            new GameDAO().addGameObject(dto);
         } catch (SQLException e) {
             e.printStackTrace();
         }

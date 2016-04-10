@@ -1,6 +1,5 @@
 package server.persistence.dto;
 
-import java.sql.Blob;
 
 /**
  * Created by boscho on 4/8/16.
