@@ -1,4 +1,4 @@
-package database;
+package server.persistence;
 
 import server.persistence.dto.GameDTO;
 

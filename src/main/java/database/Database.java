@@ -2,6 +2,7 @@ package database;
 
 import daos.GameDAO;
 import io.ConfigReader;
+import server.persistence.IDatabase;
 import server.persistence.dto.GameDTO;
 
 import java.sql.Connection;
