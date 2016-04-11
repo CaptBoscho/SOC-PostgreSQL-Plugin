@@ -82,7 +82,7 @@ public class Database implements IDatabase {
         String sqlCommands = "CREATE TABLE IF NOT EXISTS COMMANDS" +
                 "(ID SERIAL PRIMARY KEY," +
                 " GAMEID       INT     NOT NULL," +
-                " COMMANDBLOB  BYTEA    NOT NULL)";
+                " COMMANDBLOB  VARCHAR    NOT NULL)";
         commands.execute(sqlCommands);
         commands.close();
     }

@@ -22,7 +22,7 @@ public class CommandDAO implements ICommandDAO {
         System.out.println(dto.toString());
         Statement stmt = Database.getConnection().createStatement();
         String sql = "INSERT INTO COMMANDS (GAMEID,COMMANDBLOB) "
-                + "VALUES (" + dto.getGameID() + ", '" + dto.getCommand().getBytes("ISO-8859-1") + "' );";
+                + "VALUES (" + dto.getGameID() + ", '" + dto.getCommand() + "' );";
         stmt.executeUpdate(sql);
         stmt.close();
 //        Database.getConnection().commit();
@@ -34,7 +34,7 @@ public class CommandDAO implements ICommandDAO {
         ResultSet rs = stmt.executeQuery( "SELECT * FROM COMMANDS WHERE GAMEID = " + gameID + ";" );
         List<CommandDTO> commands = new ArrayList<>();
         while (rs.next()){
-            CommandDTO command = new CommandDTO(rs.getInt("gameid"), new String(rs.getBytes("commandblob"),"ISO-8859-1"));
+            CommandDTO command = new CommandDTO(rs.getInt("gameid"), rs.getString("commandblob"));
             commands.add(command);
         }
         rs.close();
@@ -49,7 +49,7 @@ public class CommandDAO implements ICommandDAO {
         ResultSet rs = stmt.executeQuery( "SELECT * FROM COMMANDS;" );
         List<CommandDTO> commands = new ArrayList<>();
         while (rs.next()) {
-            CommandDTO command = new CommandDTO(rs.getInt("gameid"), new String(rs.getBytes("commandblob"),"ISO-8859-1"));
+            CommandDTO command = new CommandDTO(rs.getInt("gameid"), rs.getString("commandblob"));
             commands.add(command);
             System.out.println("adding a command with game id: " + command.getGameID());
         }
