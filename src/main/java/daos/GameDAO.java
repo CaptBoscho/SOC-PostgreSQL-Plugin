@@ -62,7 +62,7 @@ public class GameDAO implements IGameDAO {
     public GameDTO getGameModel(int gameID) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
         ResultSet rs = stmt.executeQuery( "SELECT * FROM GAMES WHERE GAMEID = " + gameID +";");
-        GameDTO dto = new GameDTO(gameID, rs.getString("title"), rs.getString("state"));
+        GameDTO dto = new GameDTO(rs.getInt("id"), rs.getString("title"), rs.getString("state"));
         rs.close();
         stmt.close();
         return dto;

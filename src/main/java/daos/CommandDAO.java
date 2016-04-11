@@ -32,7 +32,7 @@ public class CommandDAO implements ICommandDAO {
         ResultSet rs = stmt.executeQuery( "SELECT * FROM COMMANDS WHERE GAMEID = " + gameID + ";" );
         List<CommandDTO> commands = new ArrayList<>();
         while (rs.next()){
-            CommandDTO command = new CommandDTO(gameID, rs.getString("commandblob"));
+            CommandDTO command = new CommandDTO(rs.getInt("gameid"), rs.getString("commandblob"));
             commands.add(command);
         }
         rs.close();
@@ -46,7 +46,7 @@ public class CommandDAO implements ICommandDAO {
         ResultSet rs = stmt.executeQuery( "SELECT * FROM COMMANDS;" );
         List<CommandDTO> commands = new ArrayList<>();
         while (rs.next()) {
-            CommandDTO command = new CommandDTO(rs.getInt("gameID"), rs.getString("commandblob"));
+            CommandDTO command = new CommandDTO(rs.getInt("gameid"), rs.getString("commandblob"));
             commands.add(command);
         }
         rs.close();
