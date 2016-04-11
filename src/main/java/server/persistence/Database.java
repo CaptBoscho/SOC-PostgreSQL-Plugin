@@ -216,10 +216,8 @@ public class Database implements IDatabase {
     }
 
     public void dropTables() throws SQLException {
-        Statement stmt = connection.createStatement();
-        // the following line is wrong..  don't know how to drop tables
-        String sql = "DROP USERS IF EXISTS CASCADE DROP GAMES IF EXISTS CASCADE DROP COMMANDS IF EXISTS CASE";
-        stmt.executeUpdate(sql);
-        stmt.close();
+        final Statement dropTables = connection.createStatement();
+        dropTables.execute(sql);
+        dropTables.close();
     }
 }
