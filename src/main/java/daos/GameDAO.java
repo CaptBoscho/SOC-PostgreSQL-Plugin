@@ -86,7 +86,7 @@ public class GameDAO implements IGameDAO {
         String sql = "UPDATE GAME set STATE = " + dto.getState()
                 + "where GAMEID =" + dto.getGameID() + ";";
         stmt.executeUpdate(sql);
-        Database.getConnection().commit();
+//        Database.getConnection().commit();
         stmt.close();
     }
 
@@ -97,7 +97,7 @@ public class GameDAO implements IGameDAO {
     public void deleteAllGames() throws SQLException{
             Statement stmt = Database.getConnection().createStatement();
             stmt.executeUpdate("DELETE FROM GAMES;");
-            Database.getConnection().commit();
+//            Database.getConnection().commit();
             stmt.close();
     }
 
@@ -106,7 +106,7 @@ public class GameDAO implements IGameDAO {
             Statement stmt = Database.getConnection().createStatement();
             String sql = "DELETE FROM GAMES where GAMEID =" + gameID + ";";
             stmt.executeUpdate(sql);
-            Database.getConnection().commit();
+//            Database.getConnection().commit();
             stmt.close();
     }
 }

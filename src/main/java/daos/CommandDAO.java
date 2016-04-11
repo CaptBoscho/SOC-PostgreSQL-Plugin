@@ -23,7 +23,7 @@ public class CommandDAO implements ICommandDAO {
                 + "VALUES (" + dto.getGameID() + ", \"" + dto.getCommand() + "\" );";
         stmt.executeUpdate(sql);
         stmt.close();
-        Database.getConnection().commit();
+//        Database.getConnection().commit();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class CommandDAO implements ICommandDAO {
         Statement stmt = Database.getConnection().createStatement();
         String sql = "DELETE FROM COMMANDS;";
         stmt.executeUpdate(sql);
-        Database.getConnection().commit();
+//        Database.getConnection().commit();
         stmt.close();
     }
 
@@ -68,7 +68,7 @@ public class CommandDAO implements ICommandDAO {
         Statement stmt = Database.getConnection().createStatement();
         String sql = "DELETE from COMMANDS where GAMEID =" + gameID + ";";
         stmt.executeUpdate(sql);
-        Database.getConnection().commit();
+//        Database.getConnection().commit();
         stmt.close();
     }
 }

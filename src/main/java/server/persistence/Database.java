@@ -100,10 +100,13 @@ public class Database implements IDatabase {
     @Override
     public void clear() {
         try {
-            connection.setAutoCommit(false);
-            Statement st = this.connection.createStatement();
-            st.executeUpdate("DROP SCHEMA public CASCADE");
-            st.close();
+            IGameDAO gameDAO = new GameDAO();
+            gameDAO.deleteAllGames();
+            IUserDAO userDAO = new UserDAO();
+            userDAO.deleteUsers();
+            ICommandDAO commandDAO = new CommandDAO();
+            commandDAO.deleteAllCommands();
+            System.out.println("Success");
         } catch (SQLException e) {
             e.printStackTrace();
         }

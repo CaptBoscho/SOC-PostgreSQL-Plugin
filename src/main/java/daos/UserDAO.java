@@ -43,7 +43,7 @@ public class UserDAO implements IUserDAO {
                 + "VALUES (" + newID +  ", " + dto.getUserName() + ", " + dto.getPassword() + " );";
         finalStatement.executeUpdate(sql);
         finalStatement.close();
-        Database.getConnection().commit();
+//        Database.getConnection().commit();
 
         return newID;
     }
@@ -78,7 +78,7 @@ public class UserDAO implements IUserDAO {
         Statement stmt = Database.getConnection().createStatement();
         String sql = "DELETE FROM USERS;";
         stmt.executeUpdate(sql);
-        Database.getConnection().commit();
+//        Database.getConnection().commit();
         stmt.close();
     }
 }
