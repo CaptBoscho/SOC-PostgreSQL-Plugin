@@ -56,6 +56,9 @@ public class Database implements IDatabase {
                 db.executeUpdate("CREATE SCHEMA public;");
             }
 
+            //Set client encoding
+            db.execute("SET CLIENT_ENCODING TO Unicode");
+
             //Creating tables
             this.createUsersTable();
             this.createCommandsTable();
