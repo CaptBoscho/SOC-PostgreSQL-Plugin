@@ -42,12 +42,14 @@ public class CommandDAO implements ICommandDAO {
 
     @Override
     public List<CommandDTO> getAllCommands() throws SQLException {
+        System.out.println("getting all commands");
         Statement stmt = Database.getConnection().createStatement();
         ResultSet rs = stmt.executeQuery( "SELECT * FROM COMMANDS;" );
         List<CommandDTO> commands = new ArrayList<>();
         while (rs.next()) {
             CommandDTO command = new CommandDTO(rs.getInt("gameid"), rs.getString("commandblob"));
             commands.add(command);
+            System.out.println("adding a command with game id: " + command.getGameID());
         }
         rs.close();
         stmt.close();

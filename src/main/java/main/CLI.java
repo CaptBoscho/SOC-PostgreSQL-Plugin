@@ -6,6 +6,7 @@ import server.persistence.dto.GameDTO;
 import server.persistence.dto.UserDTO;
 
 import javax.xml.crypto.Data;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
@@ -41,6 +42,21 @@ public class CLI {
                     System.out.println(command.toString());
                 }
                 System.out.println("All Done");
+            }
+
+            if(input.equals("test")) {
+                Database.getInstance().addCommand(new CommandDTO(2, "this is the command"));
+                Database.getInstance().addUser(new UserDTO(0, "danny", "danny"));
+                Database.getInstance().addUser(new UserDTO(0, "test", "test"));
+                Database.getInstance().addUser(new UserDTO(2, "ashley", "ashley"));
+            }
+
+            if(input.equals("drop")) {
+                try {
+                    Database.getInstance().dropTables();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

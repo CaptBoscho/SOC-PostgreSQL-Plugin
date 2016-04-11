@@ -81,7 +81,6 @@ public class Database implements IDatabase {
         String sqlCommands = "CREATE TABLE IF NOT EXISTS COMMANDS" +
                 "(ID SERIAL PRIMARY KEY," +
                 " GAMEID       INT     NOT NULL," +
-                " VERSION      INT     NOT NULL," +
                 " COMMANDBLOB  TEXT    NOT NULL)";
         commands.execute(sqlCommands);
         commands.close();
@@ -214,5 +213,13 @@ public class Database implements IDatabase {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public void dropTables() throws SQLException {
+        Statement stmt = connection.createStatement();
+        // the following line is wrong..  don't know how to drop tables
+        String sql = "DROP USERS IF EXISTS CASCADE DROP GAMES IF EXISTS CASCADE DROP COMMANDS IF EXISTS CASE";
+        stmt.executeUpdate(sql);
+        stmt.close();
     }
 }
