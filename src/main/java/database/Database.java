@@ -1,13 +1,15 @@
 package database;
 
 import io.ConfigReader;
+import server.persistence.dto.CommandDTO;
+import server.persistence.dto.GameDTO;
+import server.persistence.dto.UserDTO;
 
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.*;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -94,5 +96,45 @@ public class Database implements IDatabase {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public int addUser(UserDTO dto) {
+        return 0;
+    }
+
+    @Override
+    public List<UserDTO> getUsers() {
+        return null;
+    }
+
+    @Override
+    public int addGame(GameDTO dto) {
+        return 0;
+    }
+
+    @Override
+    public List<GameDTO> getAllGames() {
+        return null;
+    }
+
+    @Override
+    public List<CommandDTO> getCommands(int gameId) {
+        return null;
+    }
+
+    @Override
+    public void addCommand(CommandDTO dto) {
+
+    }
+
+    @Override
+    public void updateGame(GameDTO dto) {
+
+    }
+
+    @Override
+    public void deleteCommandsFromGame(int gameID) {
+
     }
 }
