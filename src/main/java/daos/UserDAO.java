@@ -23,14 +23,37 @@ public class UserDAO implements IUserDAO {
      * @param dto
      */
     @Override
-    public void addUser(UserDTO dto) throws SQLException {
+    public int addUser(UserDTO dto) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT ID FROM USERS WHERE ID = " + dto.getId() + ";");
+
+        int newID;
+        if (!rs.isBeforeFirst()) {
+            // userID doesn't exist
+            newID = dto.getId();
+            rs.close();
+            stmt.close();
+        } else {
+            rs.close();
+            stmt.close();
+
+            Statement tempStatement = Database.getConnection().createStatement();
+            ResultSet tempRS = tempStatement.executeQuery("SELECT ID FROM USERS ORDER BY ID DESC LIMIT 1;");
+            tempRS.next();
+            newID = tempRS.getInt("id");
+            tempRS.close();
+            tempStatement.close();
+        }
+
+        Statement finalStatement = Database.getConnection().createStatement();
         String sql = "INSERT INTO USERS (ID,NAME,USERNAME,PASSWORD) "
-                + "VALUES (" + dto.getId() +  ", "
+                + "VALUES (" + newID +  ", "
                 + dto.getUserName() + ", " + dto.getPassword() + " );";
-        stmt.executeUpdate(sql);
-        stmt.close();
+        finalStatement.executeUpdate(sql);
+        finalStatement.close();
         Database.getConnection().commit();
+
+        return newID;
     }
 
     /**
@@ -46,10 +69,7 @@ public class UserDAO implements IUserDAO {
         ResultSet rs = stmt.executeQuery("SELECT * FROM USERS;");
         List<UserDTO> users = new ArrayList<>();
         while(rs.next()){
-            UserDTO user = new UserDTO();
-            user.setId(rs.getInt("id"));
-            user.setUserName(rs.getString("username"));
-            user.setPassword(rs.getString("password"));
+            UserDTO user = new UserDTO(rs.getInt("id"), rs.getString("username"), rs.getString("password"));
             users.add(user);
         }
         rs.close();
@@ -57,10 +77,8 @@ public class UserDAO implements IUserDAO {
         return users;
     }
 
-
     /**
-     * Mostly be used for deleting commands every n
-     * moves.
+     * Mostly be used for deleting commands every n moves.
      *
      */
     @Override
