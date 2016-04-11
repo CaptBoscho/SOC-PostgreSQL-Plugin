@@ -26,7 +26,7 @@ public interface ICommandDAO {
      */
     List<CommandDTO> getCommands(int gameID) throws SQLException, UnsupportedEncodingException;
 
-    List<CommandDTO> getAllCommands() throws SQLException;
+    List<CommandDTO> getAllCommands() throws SQLException, UnsupportedEncodingException;
 
     /**
      * mostly be used for updating the game blob state

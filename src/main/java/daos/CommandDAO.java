@@ -34,7 +34,7 @@ public class CommandDAO implements ICommandDAO {
         ResultSet rs = stmt.executeQuery( "SELECT * FROM COMMANDS WHERE GAMEID = " + gameID + ";" );
         List<CommandDTO> commands = new ArrayList<>();
         while (rs.next()){
-            CommandDTO command = new CommandDTO(rs.getInt("gameid"), new String(rs.getBytes(1),"ISO-8859-1"));
+            CommandDTO command = new CommandDTO(rs.getInt("gameid"), new String(rs.getBytes("commandblob"),"ISO-8859-1"));
             commands.add(command);
         }
         rs.close();
@@ -43,13 +43,13 @@ public class CommandDAO implements ICommandDAO {
     }
 
     @Override
-    public List<CommandDTO> getAllCommands() throws SQLException {
+    public List<CommandDTO> getAllCommands() throws SQLException, UnsupportedEncodingException {
         System.out.println("getting all commands");
         Statement stmt = Database.getConnection().createStatement();
         ResultSet rs = stmt.executeQuery( "SELECT * FROM COMMANDS;" );
         List<CommandDTO> commands = new ArrayList<>();
         while (rs.next()) {
-            CommandDTO command = new CommandDTO(rs.getInt("gameid"), rs.getString("commandblob"));
+            CommandDTO command = new CommandDTO(rs.getInt("gameid"), new String(rs.getBytes("commandblob"),"ISO-8859-1"));
             commands.add(command);
             System.out.println("adding a command with game id: " + command.getGameID());
         }

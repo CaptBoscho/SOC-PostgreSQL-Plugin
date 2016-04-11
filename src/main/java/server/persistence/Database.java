@@ -210,7 +210,7 @@ public class Database implements IDatabase {
         ICommandDAO dao = new CommandDAO();
         try {
             return dao.getAllCommands();
-        } catch (SQLException e) {
+        } catch (SQLException | UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;
         }
