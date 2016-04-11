@@ -20,7 +20,7 @@ public class CommandDAO implements ICommandDAO {
     public void addCommand(CommandDTO dto) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
         String sql = "INSERT INTO COMMANDS (GAMEID,COMMANDBLOB) "
-                + "VALUES (" + dto.getGameID() + ", \"" + dto.getCommand() + "\" );";
+                + "VALUES (" + dto.getGameID() + ", '" + dto.getCommand() + "' );";
         stmt.executeUpdate(sql);
         stmt.close();
 //        Database.getConnection().commit();

@@ -38,7 +38,7 @@ public class GameDAO implements IGameDAO {
         stmt.close();
 
         Statement finalStatement = Database.getConnection().createStatement();
-        String sql = "INSERT INTO GAMES (ID,TITLE,STATE) " + "VALUES (" + newID + ", \"" + dto.getTitle() + "\", \"" + dto.getState() + "\" );";
+        String sql = "INSERT INTO GAMES (ID, TITLE, STATE) VALUES (" + newID + ", '" + dto.getTitle() + "', '" + dto.getState() + "' );";
         finalStatement.executeUpdate(sql);
         finalStatement.close();
         Database.getConnection().commit();

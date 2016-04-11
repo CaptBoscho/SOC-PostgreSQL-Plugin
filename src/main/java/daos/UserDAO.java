@@ -40,7 +40,7 @@ public class UserDAO implements IUserDAO {
 
         Statement finalStatement = Database.getConnection().createStatement();
         String sql = "INSERT INTO USERS (ID,USERNAME,PASSWORD) "
-                + "VALUES (" + newID +  ", " + dto.getUserName() + ", " + dto.getPassword() + " );";
+                + "VALUES (" + newID +  ", '" + dto.getUserName() + "', '" + dto.getPassword() + "' );";
         finalStatement.executeUpdate(sql);
         finalStatement.close();
 //        Database.getConnection().commit();
