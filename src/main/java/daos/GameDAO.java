@@ -24,25 +24,18 @@ public class GameDAO implements IGameDAO {
     @Override
     public int addGameObject(GameDTO dto) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT ID FROM GAMES WHERE ID = " + dto.getGameID() + ";");
+        ResultSet rs = stmt.executeQuery("SELECT ID FROM GAMES ORDER BY ID DESC LIMIT 1;");
 
         int newID;
         if (!rs.isBeforeFirst()) {
-            // gameID doesn't exist
-            newID = dto.getGameID();
-            rs.close();
-            stmt.close();
+            // no games in database
+            newID = 0;
         } else {
-            rs.close();
-            stmt.close();
-
-            Statement tempStatement = Database.getConnection().createStatement();
-            ResultSet tempRS = tempStatement.executeQuery("SELECT ID FROM GAMES ORDER BY ID DESC LIMIT 1;");
-            tempRS.next();
-            newID = tempRS.getInt("id");
-            tempRS.close();
-            tempStatement.close();
+            rs.next();
+            newID = rs.getInt("id") + 1;
         }
+        rs.close();
+        stmt.close();
 
         Statement finalStatement = Database.getConnection().createStatement();
         String sql = "INSERT INTO GAMES (ID,TITLE,STATE) "
