@@ -2,6 +2,7 @@ package daos;
 
 import server.persistence.dto.CommandDTO;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface ICommandDAO {
      * adding a game
      * @param dto
      */
-    void addCommand(CommandDTO dto) throws SQLException;
+    void addCommand(CommandDTO dto) throws SQLException, UnsupportedEncodingException;
 
     /**
      * Handles verifying user which returns userID
@@ -23,7 +24,7 @@ public interface ICommandDAO {
      * getting a list of Commands
      * @return
      */
-    List<CommandDTO> getCommands(int gameID) throws SQLException;
+    List<CommandDTO> getCommands(int gameID) throws SQLException, UnsupportedEncodingException;
 
     List<CommandDTO> getAllCommands() throws SQLException;
 

@@ -7,6 +7,7 @@ import server.persistence.dto.CommandDTO;
 import server.persistence.dto.GameDTO;
 import server.persistence.dto.UserDTO;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -169,7 +170,7 @@ public class Database implements IDatabase {
         ICommandDAO dao = new CommandDAO();
         try {
             return dao.getCommands(gameId);
-        } catch (SQLException e) {
+        } catch (SQLException | UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;
         }
@@ -180,7 +181,7 @@ public class Database implements IDatabase {
         ICommandDAO dao = new CommandDAO();
         try {
             dao.addCommand(dto);
-        } catch (SQLException e) {
+        } catch (SQLException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
