@@ -22,13 +22,36 @@ public class GameDAO implements IGameDAO {
      * @param dto
      */
     @Override
-    public void addGameObject(GameDTO dto) throws SQLException {
+    public int addGameObject(GameDTO dto) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT ID FROM GAMES WHERE ID = " + dto.getGameID() + ";");
+
+        int newID;
+        if (!rs.isBeforeFirst()) {
+            // gameID doesn't exist
+            newID = dto.getGameID();
+            rs.close();
+            stmt.close();
+        } else {
+            rs.close();
+            stmt.close();
+
+            Statement tempStatement = Database.getConnection().createStatement();
+            ResultSet tempRS = tempStatement.executeQuery("SELECT ID FROM GAMES ORDER BY ID DESC LIMIT 1;");
+            tempRS.next();
+            newID = tempRS.getInt("id");
+            tempRS.close();
+            tempStatement.close();
+        }
+
+        Statement finalStatement = Database.getConnection().createStatement();
         String sql = "INSERT INTO GAMES (ID,TITLE,STATE) "
-                + "VALUES (" + dto.getGameID() + ", " + dto.getTitle() + ", " + dto.getState() + " );";
-        stmt.executeUpdate(sql);
-        stmt.close();
+                + "VALUES (" + newID + ", " + dto.getTitle() + ", " + dto.getState() + " );";
+        finalStatement.executeUpdate(sql);
+        finalStatement.close();
         Database.getConnection().commit();
+
+        return newID;
     }
 
     /**
@@ -38,12 +61,8 @@ public class GameDAO implements IGameDAO {
     @Override
     public GameDTO getGameModel(int gameID) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
-        ResultSet rs = stmt.executeQuery( "SELECT * FROM GAMES WHERE GAMEID = "
-                + gameID +";");
-        GameDTO dto = new GameDTO();
-        dto.setGameID(gameID);
-        dto.setTitle(rs.getString("title"));
-        dto.setState(rs.getString("state"));
+        ResultSet rs = stmt.executeQuery( "SELECT * FROM GAMES WHERE GAMEID = " + gameID +";");
+        GameDTO dto = new GameDTO(rs.getInt("id"), rs.getString("title"), rs.getString("state"));
         rs.close();
         stmt.close();
         return dto;
@@ -51,14 +70,12 @@ public class GameDAO implements IGameDAO {
 
     @Override
     public List<GameDTO> getAllGames() throws SQLException {
-        List<GameDTO> games = new ArrayList<>();
         Statement stmt = Database.getConnection().createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM GAMES;");
+
+        List<GameDTO> games = new ArrayList<>();
         while (rs.next()){
-            GameDTO game = new GameDTO();
-            game.setGameID(rs.getInt("id"));
-            game.setTitle(rs.getString("title"));
-            game.setState(rs.getString("state"));
+            GameDTO game = new GameDTO(rs.getInt("id"), rs.getString("title"), rs.getString("state"));
             games.add(game);
         }
         rs.close();
@@ -75,7 +92,7 @@ public class GameDAO implements IGameDAO {
     public void updateGame(GameDTO dto) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
         String sql = "UPDATE GAME set STATE = " + dto.getState()
-                + "where GAMEID=" + dto.getGameID() + ";";
+                + "where GAMEID =" + dto.getGameID() + ";";
         stmt.executeUpdate(sql);
         Database.getConnection().commit();
         stmt.close();
@@ -87,8 +104,7 @@ public class GameDAO implements IGameDAO {
     @Override
     public void deleteAllGames() throws SQLException{
             Statement stmt = Database.getConnection().createStatement();
-            String sql = "DELETE FROM GAMES;";
-            stmt.executeUpdate(sql);
+            stmt.executeUpdate("DELETE FROM GAMES;");
             Database.getConnection().commit();
             stmt.close();
     }

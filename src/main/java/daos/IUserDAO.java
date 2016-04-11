@@ -13,7 +13,7 @@ public interface IUserDAO {
      * Handles adding a user
      * @param dto
      */
-    void addUser(UserDTO dto) throws SQLException;
+    int addUser(UserDTO dto) throws SQLException;
 
     /**
      * Handles verifying user which returns userID

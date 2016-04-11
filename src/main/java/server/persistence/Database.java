@@ -1,14 +1,18 @@
 package server.persistence;
 
-import daos.GameDAO;
+import daos.*;
+import factory.DAOFactory;
 import io.ConfigReader;
+import server.persistence.dto.CommandDTO;
 import server.persistence.dto.GameDTO;
+import server.persistence.dto.UserDTO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.*;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -115,9 +119,85 @@ public class Database implements IDatabase {
     }
 
     @Override
-    public void addGame(GameDTO dto) {
+    public int addUser(UserDTO dto) {
+        IUserDAO dao = DAOFactory.getInstance().createUserDAO();
         try {
-            new GameDAO().addGameObject(dto);
+            return dao.addUser(dto);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    @Override
+    public List<UserDTO> getUsers() {
+        IUserDAO dao = DAOFactory.getInstance().createUserDAO();
+        try {
+            return dao.getUsers();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public int addGame(GameDTO dto) {
+        try {
+            IGameDAO dao = new GameDAO();
+            return dao.addGameObject(dto);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    @Override
+    public List<GameDTO> getAllGames() {
+        IGameDAO dao = new GameDAO();
+        try {
+            return dao.getAllGames();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<CommandDTO> getCommands(int gameId) {
+        ICommandDAO dao = new CommandDAO();
+        try {
+            return dao.getCommands(gameId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void addCommand(CommandDTO dto) {
+        ICommandDAO dao = new CommandDAO();
+        try {
+            dao.addCommand(dto);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateGame(GameDTO dto) {
+        IGameDAO dao = new GameDAO();
+        try {
+            dao.updateGame(dto);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteCommandsFromGame(int gameID) {
+        ICommandDAO dao = new CommandDAO();
+        try {
+            dao.deleteCommandsFromGame(gameID);
         } catch (SQLException e) {
             e.printStackTrace();
         }

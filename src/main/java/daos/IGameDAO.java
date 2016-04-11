@@ -15,7 +15,7 @@ public interface IGameDAO {
      * adding a game
      * @param dto
      */
-    void addGameObject(GameDTO dto) throws SQLException;
+    int addGameObject(GameDTO dto) throws SQLException;
 
     /**
      * Handles verifying user which returns userID

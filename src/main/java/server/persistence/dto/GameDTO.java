@@ -1,6 +1,5 @@
 package server.persistence.dto;
 
-
 /**
  * Created by boscho on 4/8/16.
  */
