@@ -42,7 +42,7 @@ public class GameDAO implements IGameDAO {
         System.out.println("running: " + sql);
         finalStatement.executeUpdate(sql);
         finalStatement.close();
-        Database.getConnection().commit();
+//        Database.getConnection().commit();
 
         return newID;
     }

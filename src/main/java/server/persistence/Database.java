@@ -205,4 +205,14 @@ public class Database implements IDatabase {
             e.printStackTrace();
         }
     }
+
+    public List<CommandDTO> getAllCommands() {
+        ICommandDAO dao = new CommandDAO();
+        try {
+            return dao.getAllCommands();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

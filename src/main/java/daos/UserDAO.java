@@ -27,6 +27,7 @@ public class UserDAO implements IUserDAO {
         Statement stmt = Database.getConnection().createStatement();
         ResultSet rs = stmt.executeQuery("SELECT ID FROM USERS ORDER BY ID DESC LIMIT 1;");
 
+        System.out.println("adding user");
         int newID;
         if (!rs.isBeforeFirst()) {
             // no users in database
@@ -44,7 +45,7 @@ public class UserDAO implements IUserDAO {
         finalStatement.executeUpdate(sql);
         finalStatement.close();
 //        Database.getConnection().commit();
-
+        System.out.println("returning " + newID);
         return newID;
     }
 

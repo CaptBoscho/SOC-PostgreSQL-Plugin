@@ -33,4 +33,14 @@ public class GameDTO {
     public void setState(String state) {
         this.state = state;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("gameID: " + gameID + "\n");
+        sb.append("title: " + title + "\n");
+        sb.append("gameJSON: " + state + "\n");
+
+        return sb.toString();
+    }
 }

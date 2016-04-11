@@ -34,4 +34,14 @@ public class UserDTO {
     public String getUserName() {
         return userName;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("userID: " + id + "\n");
+        sb.append("username: " + userName + "\n");
+        sb.append("password: " + password + "\n");
+
+        return sb.toString();
+    }
 }
