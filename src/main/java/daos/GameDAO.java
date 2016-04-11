@@ -84,8 +84,8 @@ public class GameDAO implements IGameDAO {
     @Override
     public void updateGame(GameDTO dto) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
-        String sql = "UPDATE GAME set STATE = " + dto.getState()
-                + "where GAMEID =" + dto.getGameID() + ";";
+        String sql = "UPDATE GAME set STATE = '" + dto.getState()
+                + "' where GAMEID = " + dto.getGameID() + ";";
         stmt.executeUpdate(sql);
 //        Database.getConnection().commit();
         stmt.close();
@@ -105,7 +105,7 @@ public class GameDAO implements IGameDAO {
     @Override
     public void deleteGame(int gameID) throws SQLException {
             Statement stmt = Database.getConnection().createStatement();
-            String sql = "DELETE FROM GAMES where GAMEID =" + gameID + ";";
+            String sql = "DELETE FROM GAMES where GAMEID = " + gameID + ";";
             stmt.executeUpdate(sql);
 //            Database.getConnection().commit();
             stmt.close();
