@@ -56,9 +56,6 @@ public class Database implements IDatabase {
                 db.executeUpdate("CREATE SCHEMA public;");
             }
 
-            //Set client encoding
-            db.execute("SET CLIENT_ENCODING TO Unicode");
-
             //Creating tables
             this.createUsersTable();
             this.createCommandsTable();
@@ -85,7 +82,7 @@ public class Database implements IDatabase {
         String sqlCommands = "CREATE TABLE IF NOT EXISTS COMMANDS" +
                 "(ID SERIAL PRIMARY KEY," +
                 " GAMEID       INT     NOT NULL," +
-                " COMMANDBLOB  VARCHAR    NOT NULL)";
+                " COMMANDBLOB  TEXT    NOT NULL)";
         commands.execute(sqlCommands);
         commands.close();
     }
