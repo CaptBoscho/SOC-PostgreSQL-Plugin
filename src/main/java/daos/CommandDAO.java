@@ -18,6 +18,7 @@ public class CommandDAO implements ICommandDAO {
 
     @Override
     public void addCommand(CommandDTO dto) throws SQLException {
+        System.out.println(dto.toString());
         Statement stmt = Database.getConnection().createStatement();
         String sql = "INSERT INTO COMMANDS (GAMEID,COMMANDBLOB) "
                 + "VALUES (" + dto.getGameID() + ", '" + dto.getCommand() + "' );";
