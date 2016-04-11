@@ -217,6 +217,7 @@ public class Database implements IDatabase {
 
     public void dropTables() throws SQLException {
         final Statement dropTables = connection.createStatement();
+        String sql = "DROP TABLE IF EXISTS USERS, COMMANDS, GAMES";
         dropTables.execute(sql);
         dropTables.close();
     }
