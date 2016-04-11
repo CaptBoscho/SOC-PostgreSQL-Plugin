@@ -20,7 +20,7 @@ public class CommandDAO implements ICommandDAO {
     public void addCommand(CommandDTO dto) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
         String sql = "INSERT INTO COMMANDS (GAMEID,COMMANDBLOB) "
-                + "VALUES (" + dto.getGameID() + ", " + dto.getCommand() + " );";
+                + "VALUES (" + dto.getGameID() + ", \"" + dto.getCommand() + "\" );";
         stmt.executeUpdate(sql);
         stmt.close();
         Database.getConnection().commit();
@@ -66,7 +66,7 @@ public class CommandDAO implements ICommandDAO {
     @Override
     public void deleteCommandsFromGame(int gameID) throws SQLException {
         Statement stmt = Database.getConnection().createStatement();
-        String sql = "DELETE from COMMANDS where GAMEID=" + gameID + ";";
+        String sql = "DELETE from COMMANDS where GAMEID =" + gameID + ";";
         stmt.executeUpdate(sql);
         Database.getConnection().commit();
         stmt.close();

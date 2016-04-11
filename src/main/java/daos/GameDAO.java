@@ -38,8 +38,7 @@ public class GameDAO implements IGameDAO {
         stmt.close();
 
         Statement finalStatement = Database.getConnection().createStatement();
-        String sql = "INSERT INTO GAMES (ID,TITLE,STATE) "
-                + "VALUES (" + newID + ", " + dto.getTitle() + ", " + dto.getState() + " );";
+        String sql = "INSERT INTO GAMES (ID,TITLE,STATE) " + "VALUES (" + newID + ", \"" + dto.getTitle() + "\", \"" + dto.getState() + "\" );";
         finalStatement.executeUpdate(sql);
         finalStatement.close();
         Database.getConnection().commit();
@@ -105,7 +104,7 @@ public class GameDAO implements IGameDAO {
     @Override
     public void deleteGame(int gameID) throws SQLException {
             Statement stmt = Database.getConnection().createStatement();
-            String sql = "DELETE FROM GAMES where GAMEID=" + gameID + ";";
+            String sql = "DELETE FROM GAMES where GAMEID =" + gameID + ";";
             stmt.executeUpdate(sql);
             Database.getConnection().commit();
             stmt.close();
