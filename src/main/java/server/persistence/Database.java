@@ -57,7 +57,7 @@ public class Database implements IDatabase {
             }
 
             //Set client encoding
-            db.execute("SET CLIENT_ENCODING TO Unicode");
+            db.execute("SET CLIENT_ENCODING TO UNICODE");
 
             //Creating tables
             this.createUsersTable();
