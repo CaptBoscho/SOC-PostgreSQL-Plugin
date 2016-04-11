@@ -3,6 +3,7 @@ package daos;
 import server.persistence.Database;
 import server.persistence.dto.CommandDTO;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,23 +18,23 @@ public class CommandDAO implements ICommandDAO {
 
 
     @Override
-    public void addCommand(CommandDTO dto) throws SQLException {
+    public void addCommand(CommandDTO dto) throws SQLException, UnsupportedEncodingException {
         System.out.println(dto.toString());
         Statement stmt = Database.getConnection().createStatement();
         String sql = "INSERT INTO COMMANDS (GAMEID,COMMANDBLOB) "
-                + "VALUES (" + dto.getGameID() + ", '" + dto.getCommand() + "' );";
+                + "VALUES (" + dto.getGameID() + ", '" + dto.getCommand().getBytes("ISO-8859-1") + "' );";
         stmt.executeUpdate(sql);
         stmt.close();
 //        Database.getConnection().commit();
     }
 
     @Override
-    public List<CommandDTO> getCommands(int gameID) throws SQLException {
+    public List<CommandDTO> getCommands(int gameID) throws SQLException, UnsupportedEncodingException {
         Statement stmt = Database.getConnection().createStatement();
         ResultSet rs = stmt.executeQuery( "SELECT * FROM COMMANDS WHERE GAMEID = " + gameID + ";" );
         List<CommandDTO> commands = new ArrayList<>();
         while (rs.next()){
-            CommandDTO command = new CommandDTO(rs.getInt("gameid"), rs.getString("commandblob"));
+            CommandDTO command = new CommandDTO(rs.getInt("gameid"), new String(rs.getBytes(1),"ISO-8859-1"));
             commands.add(command);
         }
         rs.close();
