@@ -3,12 +3,14 @@ package daos;
 import server.persistence.Database;
 import server.persistence.dto.CommandDTO;
 
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,10 +33,22 @@ public class CommandDAO implements ICommandDAO {
     @Override
     public List<CommandDTO> getCommands(int gameID) throws SQLException, UnsupportedEncodingException {
         Statement stmt = Database.getConnection().createStatement();
-        ResultSet rs = stmt.executeQuery( "SELECT * FROM COMMANDS WHERE GAMEID = " + gameID + ";" );
+        ResultSet rs = stmt.executeQuery( "SELECT * FROM COMMANDS WHERE GAMEID = " + gameID + " ORDER  BY ID DESC;" );
         List<CommandDTO> commands = new ArrayList<>();
-        while (rs.next()){
-            CommandDTO command = new CommandDTO(rs.getInt("gameid"), rs.getString("commandblob"));
+        while (rs.next()) {
+            /*String other = rs.getString("commandblob").substring(1, rs.getString("commandblob").length() - 1);
+            String[] strings =  other.split(", ");
+            byte[] bytes = new byte[strings.length];
+            for (int i = 0; i < strings.length; i++) {
+                bytes[i] = Byte.parseByte(strings[i]);
+            }
+
+            String str = new String(bytes);*/
+
+            System.out.println("getting: " + rs.getString("commandblob"));
+//            System.out.println("getting: " + str);
+
+            CommandDTO command = new CommandDTO(rs.getInt("gameid"), rs.getString("commandblob")/*str*/);
             commands.add(command);
         }
         rs.close();
